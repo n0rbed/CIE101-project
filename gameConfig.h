@@ -71,6 +71,11 @@ struct
 		int headt_base = 80;
 		int oba_radius = 40;
 	}mosqueShape;
+	struct {
+		int h_Length = 80;
+		int h_Height = 20;
+		int d_radius = 20;
+	}dShape;
 
 }config;
 

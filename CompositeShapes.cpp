@@ -1,6 +1,7 @@
 #include "CompositeShapes.h"
 #include "gameConfig.h"
-
+#include <iostream>
+using namespace std;
 ////////////////////////////////////////////////////  class Sign  ///////////////////////////////////////
 Sign::Sign(game* r_pGame, point ref):shape(r_pGame, ref)
 {
@@ -117,7 +118,7 @@ void tree::draw() const {
 }
 
 
-////////////////////////////////////////////////////  class castle  ///////////////////////////////////////
+////////////////////////////////////////////////////  class mosque  ///////////////////////////////////////
 
 mosque::mosque(game* r_pGame, point ref) : shape(r_pGame, ref) {
 	point base_ref = ref;
@@ -158,3 +159,30 @@ void mosque::draw() const
 	left_th->draw();
 	right_th->draw();
 }
+
+
+
+
+
+////////////////////////////////////////////////////  class dumbbell  ///////////////////////////////////////
+
+dumbbell::dumbbell(game* r_pGame, point ref) : shape(r_pGame, ref) {
+	point handle_ref = ref;
+	point left_w_ref = { ref.x - (config.dShape.h_Length / 2), ref.y };
+	point right_w_ref = { ref.x + (config.dShape.h_Length / 2), ref.y };
+
+	handle = new Rect(r_pGame, handle_ref, config.dShape.h_Height, config.dShape.h_Length);
+	left_w = new circle(r_pGame, left_w_ref, config.dShape.d_radius);
+	right_w = new circle(r_pGame, right_w_ref, config.dShape.d_radius);
+	
+}
+void dumbbell::draw() const
+{
+	handle->draw();
+	left_w->draw();
+	right_w->draw();
+
+}
+
+
+

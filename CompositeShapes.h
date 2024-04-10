@@ -89,3 +89,13 @@ public:
 	mosque(game* r_pGame, point ref);
 	virtual void draw() const;
 };
+
+class dumbbell : public shape
+{
+	Rect* handle; 
+	circle* left_w;
+	circle* right_w;
+public:
+	dumbbell(game* r_pGame, point ref);
+	virtual void draw() const;
+};

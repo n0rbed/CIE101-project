@@ -13,7 +13,7 @@ int main()
 	game Game;
 	game* r_pGame = &Game;
 	point ref = { 400,400 };
-	mosque rockeT(r_pGame, ref);
+	dumbbell rockeT(r_pGame, ref);
 	rockeT.draw();
 	Game.run();
 	rockeT.draw();
