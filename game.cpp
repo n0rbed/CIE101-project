@@ -68,9 +68,11 @@ operation* game::createRequiredOperation(toolbarItem clickedItem)
 	operation* op=nullptr;
 	switch (clickedItem)
 	{
-	/*case ITM_SIGN:
+	case ITM_ICECREAM:
 		op = new operAddSign(this);
-		break;*/
+		break;
+	case ITM_DELETE:
+		shapesGrid->deleteActiceShape();
 	}
 	return op;
 }
@@ -152,11 +154,13 @@ void game::run()
 
 			//3-create the approp operation accordin to item clicked by the user
 			operation* op = createRequiredOperation(clickedItem);
-			if (op)
+			if (op) {
 				op->Act();
+				shapesGrid->draw();
+			}
 
-			//4-Redraw the grid after each action
-			shapesGrid->draw();
+
+			
 
 		}	
 

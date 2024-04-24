@@ -43,11 +43,10 @@ toolbar::toolbar(game* pG)
 
 	pWind->SetPen(config.penColor, 50);
 	pWind->SetFont(15, BOLD, BY_NAME, "Arial");
-	pWind->DrawString(ITM_CNT * config.toolbarItemWidth, 0, "5 LIVES");
-	pWind->DrawString(ITM_CNT * config.toolbarItemWidth, 30, "SCORE = 0");
-	pWind->DrawString((ITM_CNT + 1) * config.toolbarItemWidth, 30, "LEVEL = 1");
-	pWind->SetFont(11, BOLD, BY_NAME, "Arial");
-	pWind->DrawString((ITM_CNT + 0.7) * config.toolbarItemWidth, 0, "DRAW EMPTY GRID");
+	pWind->DrawString((ITM_CNT+0.2) * config.toolbarItemWidth, 0, "5 LIVES");
+	pWind->DrawString((ITM_CNT+0.2) * config.toolbarItemWidth, 20, "SCORE = 0");
+	pWind->DrawString((ITM_CNT+0.2) * config.toolbarItemWidth, 40, "LEVEL = 1");
+	
 }
 
 
