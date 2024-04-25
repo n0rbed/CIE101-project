@@ -10,6 +10,7 @@ toolbar::toolbar(game* pG)
 	width = config.windWidth;
 	this->pGame = pG;
 	window* pWind = pGame->getWind();
+
 	
 	//You can draw the tool bar icons in any way you want.
 
@@ -41,11 +42,21 @@ toolbar::toolbar(game* pG)
 	pWind->DrawLine(0, height,width , height);
 
 
+	int* pScore = pG->getScore();
+	auto score = std::to_string(*pScore);  //convert int to string
+
+	int* pLives = pG->getLives();
+	auto lives = std::to_string(*pLives);  //convert int to string
+
+	int* pLevel = pG->getLevel();
+	auto level = std::to_string(*pLevel);  //convert int to string
+
+
 	pWind->SetPen(config.penColor, 50);
 	pWind->SetFont(15, BOLD, BY_NAME, "Arial");
-	pWind->DrawString((ITM_CNT+0.2) * config.toolbarItemWidth, 0, "5 LIVES");
-	pWind->DrawString((ITM_CNT+0.2) * config.toolbarItemWidth, 20, "SCORE = 0");
-	pWind->DrawString((ITM_CNT+0.2) * config.toolbarItemWidth, 40, "LEVEL = 1");
+	pWind->DrawString((ITM_CNT+0.2) * config.toolbarItemWidth, 0, lives + " LIVES");
+	pWind->DrawString((ITM_CNT+0.2) * config.toolbarItemWidth, 20, "SCORE = " + score);
+	pWind->DrawString((ITM_CNT + 0.2) * config.toolbarItemWidth, 40, "LEVEL = " + level);
 	
 }
 

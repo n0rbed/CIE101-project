@@ -93,7 +93,6 @@ operation* game::createRequiredOperation(toolbarItem clickedItem)
 	case ITM_DELETE:
 		shapesGrid->deleteActiveShape();
 		break;
-
 	}
 	return op;
 }
@@ -149,6 +148,21 @@ grid* game::getGrid() const
 	return shapesGrid;
 }
 
+
+int* game::getScore() const
+{
+	return score;
+}
+
+int* game::getLives() const
+{
+	return lives;
+}
+
+int* game::getLevel() const
+{
+	return level;
+}
 
 
 ////////////////////////////////////////////////////////////////////////
