@@ -22,7 +22,7 @@ public:
 	grid(point r_uprleft, int r_width, int r_height, game* r_pGame);
 	~grid();
 	void draw() const;
-	void deleteActiceShape() const;
+	void deleteActiveShape() const;
 	void clearGridArea() const;
 	bool addShape(shape* newShape);
 	void setActiveShape(shape* actShape);

@@ -63,16 +63,37 @@ void game::createGrid()
 operation* game::createRequiredOperation(toolbarItem clickedItem)
 {
 
-	string items[20] = { "ITM_ICECREAM", "ITM_CAR", "ITM_ROCKET","ITM_TREE", "ITM_MOSQUE","ITM_DUMBBELL", "ITM_INCREASE", "ITM_DECREASE", "ITM_ROTATE", "ITM_REFRESH", "ITM_HINT", "ITM_DELETE", "ITM_SELECTLEVEL", "ITM_SAVE" };
-	printMessage(items[clickedItem]);
+	string items[14] = { "ITM_ICECREAM", "ITM_CAR", "ITM_ROCKET","ITM_TREE", "ITM_MOSQUE","ITM_DUMBBELL", "ITM_INCREASE", "ITM_DECREASE", "ITM_ROTATE", "ITM_REFRESH", "ITM_HINT", "ITM_DELETE", "ITM_SELECTLEVEL", "ITM_SAVE"};
+	if (clickedItem <= 13) {
+		printMessage(items[clickedItem]);
+	}
+	else
+		printMessage("Player information");
 	operation* op=nullptr;
 	switch (clickedItem)
 	{
 	case ITM_ICECREAM:
-		op = new operAddSign(this);
+		op = new operAddIceCream(this);
+		break;
+	case ITM_CAR:
+		op = new operAddCar(this);
+		break;
+	case ITM_ROCKET:
+		op = new operAddRocket(this);
+		break;
+	case ITM_TREE:
+		op = new operAddTree(this);
+		break;
+	case ITM_MOSQUE:
+		op = new operAddMosque(this);
+		break;
+	case ITM_DUMBBELL:
+		op = new operAddDumbbell(this);
 		break;
 	case ITM_DELETE:
-		shapesGrid->deleteActiceShape();
+		shapesGrid->deleteActiveShape();
+		break;
+
 	}
 	return op;
 }

@@ -52,7 +52,7 @@ void grid::draw() const
 }
 
 
-void grid::deleteActiceShape() const
+void grid::deleteActiveShape() const
 {
 	clearGridArea();
 	window* pWind = pGame->getWind();
