@@ -24,6 +24,9 @@ game::~game()
 {
 	delete pWind;
 	delete shapesGrid;
+	delete score;
+	delete lives;
+	delete level;
 }
 
 
@@ -63,20 +66,29 @@ void game::createGrid()
 operation* game::createRequiredOperation(toolbarItem clickedItem)
 {
 
-	string items[14] = { "ITM_ICECREAM", "ITM_CAR", "ITM_ROCKET","ITM_TREE", "ITM_MOSQUE","ITM_DUMBBELL", "ITM_INCREASE", "ITM_DECREASE", "ITM_ROTATE", "ITM_REFRESH", "ITM_HINT", "ITM_DELETE", "ITM_SELECTLEVEL", "ITM_SAVE"};
+	string items[14] = { "ITM_ICECREAM", "ITM_CAR", "ITM_ROCKET","ITM_TREE", "ITM_MOSQUE","ITM_DUMBBELL", "ITM_INCREASE", "ITM_DECREASE", "ITM_ROTATE", "ITM_REFRESH", "ITM_HINT", "ITM_DELETE", "ITM_SELECTLEVEL", "ITM_SAVE" };
 	if (clickedItem <= 13) {
 		printMessage(items[clickedItem]);
 	}
 	else
-		printMessage("Player information");
+		printMessage("PLAYER INFORMATION");
 	operation* op=nullptr;
 	switch (clickedItem)
 	{
+	case ITM_ROTATE:
+		op = new operrotate(this);
+			break;
+	case ITM_INCREASE:
+		op = new operResizeUp(this);
+			break;
+	case ITM_DECREASE:
+		op = new operResizeDown(this);
+			break;
+	case ITM_CAR:
+		op= new operAddCar(this);
+		break;
 	case ITM_ICECREAM:
 		op = new operAddIceCream(this);
-		break;
-	case ITM_CAR:
-		op = new operAddCar(this);
 		break;
 	case ITM_ROCKET:
 		op = new operAddRocket(this);
@@ -88,7 +100,7 @@ operation* game::createRequiredOperation(toolbarItem clickedItem)
 		op = new operAddMosque(this);
 		break;
 	case ITM_DUMBBELL:
-		op = new operAddDumbbell(this);
+		op = new operAddDumbell(this);
 		break;
 	case ITM_DELETE:
 		shapesGrid->deleteActiveShape();
@@ -149,6 +161,8 @@ grid* game::getGrid() const
 }
 
 
+
+
 int* game::getScore() const
 {
 	return score;
@@ -163,6 +177,7 @@ int* game::getLevel() const
 {
 	return level;
 }
+
 
 
 ////////////////////////////////////////////////////////////////////////

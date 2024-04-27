@@ -27,7 +27,12 @@ class Sign :public shape
 	Rect* top;
 public:
 	Sign(game* r_pGame, point ref);
-	virtual void draw() const;
+
+	virtual void draw() const override;
+	virtual void rotate() override;
+	virtual void resizeup() override;
+	virtual void resizedown() override;
+
 
 
 };
@@ -38,9 +43,16 @@ class iceCream :public shape
 {
 	circle* cream;
 	triangle* cone;
+	
+
 public:
 	iceCream(game* r_pGame, point ref);
-	virtual void draw() const;
+
+	virtual void draw() const override;
+	virtual void rotate() override;
+	virtual void resizeup() override;
+	virtual void resizedown() override;
+
 };
 
 
@@ -51,9 +63,15 @@ class car : public shape
 	circle* left_wheel;
 	circle* right_wheel;
 	Rect* body;
+	
+	
 public:
 	car(game* r_pGame, point ref);
-	virtual void draw() const;
+
+	virtual void draw() const override;
+	virtual void rotate() override;
+	virtual void resizeup() override;
+	virtual void resizedown() override;
 };
 
 
@@ -66,7 +84,11 @@ class rocket : public shape
 	triangle* right_wing;
 public:
 	rocket(game* r_pGame, point ref);
-	virtual void draw() const;
+
+	virtual void draw() const override;
+	virtual void rotate() override;
+	virtual void resizeup() override;
+	virtual void resizedown() override;
 };
 
 
@@ -76,7 +98,12 @@ class tree : public shape
 	triangle* leafs;
 public:
 	tree(game* r_pGame, point ref);
-	virtual void draw() const;
+
+	virtual void draw() const override;
+	virtual void rotate() override;
+	virtual void resizeup() override;
+	virtual void resizedown() override;
+	point getLeafPoint_afterRot(double baseHeight, double topHeight);
 };
 
 
@@ -87,7 +114,11 @@ class mosque : public shape
 	circle* oba;
 public:
 	mosque(game* r_pGame, point ref);
-	virtual void draw() const;
+
+	virtual void draw() const override;
+	virtual void rotate() override;
+	virtual void resizeup() override;
+	virtual void resizedown() override;
 };
 
 class dumbbell : public shape
@@ -97,5 +128,9 @@ class dumbbell : public shape
 	circle* right_w;
 public:
 	dumbbell(game* r_pGame, point ref);
-	virtual void draw() const;
+
+	virtual void draw() const override;
+	virtual void rotate() override;
+	virtual void resizeup() override;
+	virtual void resizedown() override;
 };

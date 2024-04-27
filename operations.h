@@ -15,16 +15,61 @@ public:
 	//Should be overriden by derived classes
 	virtual void Act() = 0;
 };
+
+class operrotate :public operation
+{
+public:
+	operrotate(game* r_pGame);
+	virtual void Act();
+	
+};
+
+
+
+
+class operResizeUp :public operation
+{
+public:
+	operResizeUp(game* r_pGame);
+	virtual void Act();
+};
+
+
+class operResizeDown :public operation
+{
+public:
+	operResizeDown(game* r_pGame);
+	virtual void Act();
+};
+
+
+
 /////////////////////////////////// class operAddSign  //////////////////
 //Responsible for 
 //1- collectign data about a new Sign shape to add
 //2- Adding the new shape to the list of shapes (throgh the grid class)
+
+
+
 class operAddSign:public operation
 {
 public:
 	operAddSign(game* r_pGame);
 	virtual void Act();
 };
+
+
+
+
+class operAddCar :public operation
+{
+public:
+	operAddCar(game* r_pGame);
+	virtual void Act();
+};
+
+
+
 
 
 class operAddIceCream :public operation
@@ -35,12 +80,8 @@ public:
 };
 
 
-class operAddCar :public operation
-{
-public:
-	operAddCar(game* r_pGame);
-	virtual void Act();
-};
+
+
 
 class operAddRocket :public operation
 {
@@ -50,12 +91,17 @@ public:
 };
 
 
-class operAddTree :public operation
+
+
+
+class operAddTree:public operation
 {
 public:
 	operAddTree(game* r_pGame);
 	virtual void Act();
 };
+
+
 
 
 class operAddMosque :public operation
@@ -65,10 +111,12 @@ public:
 	virtual void Act();
 };
 
-class operAddDumbbell :public operation
+
+
+
+class operAddDumbell :public operation
 {
 public:
-	operAddDumbbell(game* r_pGame);
+	operAddDumbell(game* r_pGame);
 	virtual void Act();
 };
-

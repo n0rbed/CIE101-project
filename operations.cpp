@@ -8,11 +8,91 @@ operation::operation(game* r_pGame)
 }
 
 
+
+operrotate:: operrotate(game*r_pGame):operation(r_pGame)
+{
+
+}
+
+
+void operrotate::Act()
+{
+	grid* pGrid = pGame->getGrid();
+
+	shape* activeShape = pGrid->getactiveshape();
+
+	if (activeShape) 
+	{
+		activeShape->rotate();
+		pGrid->deleteActiveShape();
+
+	}
+}
+
+
+
+operResizeUp::operResizeUp(game* r_pGame) :operation(r_pGame)
+{
+
+}
+
+
+void operResizeUp::Act()
+{
+	grid* pGrid = pGame->getGrid();
+
+	shape* activeShape = pGrid->getactiveshape();
+
+	if (activeShape)
+	{
+		activeShape->resizeup();
+		pGrid->draw();
+
+	}
+}
+
+
+
+
+operResizeDown::operResizeDown(game* r_pGame) :operation(r_pGame)
+{
+
+}
+
+
+void operResizeDown::Act()
+{
+	grid* pGrid = pGame->getGrid();
+
+	shape* activeShape = pGrid->getactiveshape();
+
+	if (activeShape) 
+	{
+		pGrid->draw();
+		activeShape->resizedown();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /////////////////////////////////// class operAddSign  //////////////////
 
 operAddSign::operAddSign(game* r_pGame):operation(r_pGame)
 {
 }
+
 
 void operAddSign::Act()
 {
@@ -38,22 +118,39 @@ void operAddSign::Act()
 }
 
 
+
+
+
+
+
+
+
+
+
 operAddCar::operAddCar(game* r_pGame) :operation(r_pGame)
 {
 }
+
+
 
 void operAddCar::Act()
 {
 	window* pw = pGame->getWind();
 
-	
+	//TODO:
+	// Don't allow adding new shape if there is alreday an active shape
+
+	//align reference point to the nearest grid point
 	int xGrid = config.RefX - config.RefX % config.gridSpacing;
 	int yGrid = config.RefY - config.RefX % config.gridSpacing;
 
+	//take the aligned point as the sign shape ref point
 	point carShapeRef = { xGrid,yGrid };
 
+	//create a sign shape
 	shape* psh = new car(pGame, carShapeRef);
 
+	//Add the shape to the grid
 	grid* pGrid = pGame->getGrid();
 	pGrid->setActiveShape(psh);
 
@@ -62,24 +159,38 @@ void operAddCar::Act()
 
 
 
+
+
+
+
+
+
+
+
 operAddIceCream::operAddIceCream(game* r_pGame) :operation(r_pGame)
 {
 }
+
+
 
 void operAddIceCream::Act()
 {
 	window* pw = pGame->getWind();
 
-	
+	//TODO:
+	// Don't allow adding new shape if there is alreday an active shape
+
+	//align reference point to the nearest grid point
 	int xGrid = config.RefX - config.RefX % config.gridSpacing;
 	int yGrid = config.RefY - config.RefX % config.gridSpacing;
 
+	//take the aligned point as the sign shape ref point
 	point iceCreamShapeRef = { xGrid,yGrid };
 
-
+	//create a sign shape
 	shape* psh = new iceCream(pGame, iceCreamShapeRef);
-		
-	
+
+	//Add the shape to the grid
 	grid* pGrid = pGame->getGrid();
 	pGrid->setActiveShape(psh);
 
@@ -90,95 +201,120 @@ operAddRocket::operAddRocket(game* r_pGame) :operation(r_pGame)
 {
 }
 
+
+
 void operAddRocket::Act()
 {
 	window* pw = pGame->getWind();
 
+	//TODO:
+	// Don't allow adding new shape if there is alreday an active shape
 
+	//align reference point to the nearest grid point
 	int xGrid = config.RefX - config.RefX % config.gridSpacing;
 	int yGrid = config.RefY - config.RefX % config.gridSpacing;
 
-	
+	//take the aligned point as the sign shape ref point
 	point rocketShapeRef = { xGrid,yGrid };
 
-	
+	//create a sign shape
 	shape* psh = new rocket(pGame, rocketShapeRef);
 
-	
+	//Add the shape to the grid
 	grid* pGrid = pGame->getGrid();
 	pGrid->setActiveShape(psh);
 
 }
+
+
 
 
 operAddTree::operAddTree(game* r_pGame) :operation(r_pGame)
 {
 }
 
+
 void operAddTree::Act()
 {
 	window* pw = pGame->getWind();
 
-	
+	//TODO:
+	// Don't allow adding new shape if there is alreday an active shape
+
+	//align reference point to the nearest grid point
 	int xGrid = config.RefX - config.RefX % config.gridSpacing;
 	int yGrid = config.RefY - config.RefX % config.gridSpacing;
 
-	
+	//take the aligned point as the sign shape ref point
 	point treeShapeRef = { xGrid,yGrid };
 
+	//create a sign shape
 	shape* psh = new tree(pGame, treeShapeRef);
 
-	
+	//Add the shape to the grid
 	grid* pGrid = pGame->getGrid();
 	pGrid->setActiveShape(psh);
 
 }
-
 
 
 operAddMosque::operAddMosque(game* r_pGame) :operation(r_pGame)
 {
 }
 
+
 void operAddMosque::Act()
 {
 	window* pw = pGame->getWind();
 
-	
+	//TODO:
+	// Don't allow adding new shape if there is alreday an active shape
+
+	//align reference point to the nearest grid point
 	int xGrid = config.RefX - config.RefX % config.gridSpacing;
 	int yGrid = config.RefY - config.RefX % config.gridSpacing;
 
+	//take the aligned point as the sign shape ref point
 	point mosqueShapeRef = { xGrid,yGrid };
 
-
+	//create a sign shape
 	shape* psh = new mosque(pGame, mosqueShapeRef);
 
-	
+	//Add the shape to the grid
 	grid* pGrid = pGame->getGrid();
 	pGrid->setActiveShape(psh);
 
 }
 
 
-operAddDumbbell::operAddDumbbell(game* r_pGame) :operation(r_pGame)
+
+operAddDumbell::operAddDumbell(game* r_pGame) :operation(r_pGame)
 {
 }
 
-void operAddDumbbell::Act()
+
+void operAddDumbell::Act()
 {
 	window* pw = pGame->getWind();
 
+	//TODO:
+	// Don't allow adding new shape if there is alreday an active shape
 
+	//align reference point to the nearest grid point
 	int xGrid = config.RefX - config.RefX % config.gridSpacing;
 	int yGrid = config.RefY - config.RefX % config.gridSpacing;
 
-	point dumbbellShapeRef = { xGrid,yGrid };
+	//take the aligned point as the sign shape ref point
+	point dumbellShapeRef = { xGrid,yGrid };
 
+	//create a sign shape
+	shape* psh = new dumbbell(pGame, dumbellShapeRef);
 
-	shape* psh = new dumbbell(pGame, dumbbellShapeRef);
-
-
+	//Add the shape to the grid
 	grid* pGrid = pGame->getGrid();
 	pGrid->setActiveShape(psh);
 
 }
+
+
+

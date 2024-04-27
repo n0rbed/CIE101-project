@@ -13,9 +13,12 @@ int main()
 	game Game;
 	game* r_pGame = &Game;
 	point ref = { 400,400 };
-	dumbbell rockeT(r_pGame, ref);
+	triangle rockeT(r_pGame, ref,20, 10);
 	rockeT.draw();
 	Game.run();
+	rockeT.draw();
+	rockeT.rotate();
+	rockeT.rotate();
 	rockeT.draw();
 
 	

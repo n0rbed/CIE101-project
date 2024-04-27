@@ -7,6 +7,11 @@
 __declspec(selectany) //This line to prevent "redefinition error"
 struct 		
 {
+	double sizeup = 2;
+	double sizedown=0.5;
+
+
+
 	int	windWidth=1200, windHeight=600,	//Window width and height
 		wx=5, wy=5,			//Window starting coordinates
 

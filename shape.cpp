@@ -14,3 +14,17 @@ void shape::setRefPoint(point p)
 {
 	RefPoint = p;
 }
+
+point shape::getRefPoint()
+{
+	return RefPoint;
+}
+
+
+
+
+
+
+
+
+

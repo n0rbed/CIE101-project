@@ -16,10 +16,27 @@
 class Rect:public shape
 {
 	int hght, wdth;	//height and width of the recangle
+	
 public:
 	Rect(game* r_pGame, point ref, int r_hght, int r_wdth);
-	virtual void draw() const;
 
+	virtual void draw() const override;
+	virtual void rotate() override;
+	virtual void resizeup() override;
+	virtual void resizedown() override;
+	point getRefPoint()const;
+
+
+	int getheight() const
+	{
+		return hght;
+	}
+
+
+	int getwidth() const
+	{
+		return wdth;
+	}
 
 };
 
@@ -32,17 +49,56 @@ class circle:public shape
 	int rad;
 public:	
 	circle(game* r_pGame, point ref, int r);	//add more parameters for the constructor if needed
-	virtual void draw() const;
+
+	virtual void draw() const override;
+	virtual void rotate() override;
+	virtual void resizeup() override;
+	virtual void resizedown() override;
+
+
+	 int getradius() const
+	{
+		return rad;
+	}
+
+
+
+
+
+	point getRefPoint()const;
+
+
 };
 
 
 class triangle:public shape
 {
 	int base, height;
-	point *ptop = nullptr;
+	double current_angle;
+	point upperLeft, upperRight, top_point;
+
 public:
 	triangle(game* r_pGame, point ref, int r_base, int r_height);
-	triangle(game* r_pGame, point ref, int r_base, int r_height, point *input_top);
+	void update_tpoints();
 
-	virtual void draw() const;
+	virtual void draw() const override;
+	virtual void rotate() override;
+	virtual void resizeup() override;
+	virtual void resizedown() override;
+	point getRefPoint()const;
+	double get_curAngle() const;
+
+
+	int getbase() const
+	{
+		return base;
+	}
+	
+	int gethght() const
+	{
+		return height;
+	}
+
+
+
 };

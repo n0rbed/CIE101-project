@@ -10,7 +10,6 @@ toolbar::toolbar(game* pG)
 	width = config.windWidth;
 	this->pGame = pG;
 	window* pWind = pGame->getWind();
-
 	
 	//You can draw the tool bar icons in any way you want.
 
@@ -54,8 +53,8 @@ toolbar::toolbar(game* pG)
 
 	pWind->SetPen(config.penColor, 50);
 	pWind->SetFont(15, BOLD, BY_NAME, "Arial");
-	pWind->DrawString((ITM_CNT+0.2) * config.toolbarItemWidth, 0, lives + " LIVES");
-	pWind->DrawString((ITM_CNT+0.2) * config.toolbarItemWidth, 20, "SCORE = " + score);
+	pWind->DrawString((ITM_CNT + 0.2) * config.toolbarItemWidth, 0, lives + " LIVES");
+	pWind->DrawString((ITM_CNT + 0.2) * config.toolbarItemWidth, 20, "SCORE = " + score);
 	pWind->DrawString((ITM_CNT + 0.2) * config.toolbarItemWidth, 40, "LEVEL = " + level);
 	
 }
