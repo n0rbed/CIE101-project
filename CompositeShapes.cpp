@@ -87,48 +87,24 @@ void iceCream::rotate()
 
 void iceCream::resizeup()
 {
+	point cone_ref = cone->getRefPoint();
+	point cone_newRef = { (cone_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (cone_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
 
-
-	double coneHeight = cone->gethght();
-	double creamradius = cream->getradius();
-
-
-	point newConeRef = { RefPoint.x, RefPoint.y + (creamradius) + (coneHeight) };
-	point newCreamRef = RefPoint;
-
-
-	cone->setRefPoint(newConeRef);
-	cone->update_tpoints();
-	cream->setRefPoint(newCreamRef);
+	cone->setRefPoint(cone_newRef);
 
 	cream->resizeup();
 	cone->resizeup();
-
-
-
-
 }
 
 void iceCream::resizedown()
 {
-	
+	point cone_ref = cone->getRefPoint();
+	point cone_newRef = { (cone_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (cone_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
 
-
-	double coneHeight = cone->gethght();
-	double creamradius = cream->getradius();
-
-
-	point newConeRef = { RefPoint.x, RefPoint.y + (creamradius / 4) + (coneHeight / 4) };
-	point newCreamRef = RefPoint;
-
-
-	cone->setRefPoint(newConeRef);
-	cone->update_tpoints();
-	cream->setRefPoint(newCreamRef);
+	cone->setRefPoint(cone_newRef);
 
 	cream->resizedown();
 	cone->resizedown();
-
 }
 
 
@@ -185,53 +161,42 @@ void car::rotate()
 
 void car::resizeup()
 {
+	point rw_ref = right_wheel->getRefPoint();
+	point rw_newRef = { (rw_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (rw_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
+
+
+	point lw_ref = left_wheel->getRefPoint();
+	point lw_newRef = { (lw_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (lw_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
+
+	left_wheel->setRefPoint(rw_newRef);
+	right_wheel->setRefPoint(lw_newRef);
+
+
+
 	left_wheel->resizeup();
 	right_wheel->resizeup();
 	body->resizeup();
-
-
-
-	double baseHeight = body->getheight();
-	double wheel1height = left_wheel->getradius();
-	double wheel2height = right_wheel->getradius();
-	double baseWidth = body->getwidth();
-	int remainingdist = (baseWidth - (wheel1height)) / 3;
-
-	point baseref = RefPoint;
-	point newwheely1 = { RefPoint.x - remainingdist,RefPoint.y + (baseHeight / 2) };
-	point newwheely2 = { RefPoint.x + remainingdist,RefPoint.y + (baseHeight / 2) };
-
-	body->setRefPoint(baseref);
-
-
-	left_wheel->setRefPoint(newwheely1);
-	right_wheel->setRefPoint(newwheely2);
 }
 
 
 
 void car::resizedown()
 {
+	point rw_ref = right_wheel->getRefPoint();
+	point rw_newRef = { (rw_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (rw_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
+
+
+	point lw_ref = left_wheel->getRefPoint();
+	point lw_newRef = { (lw_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (lw_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
+
+	left_wheel->setRefPoint(rw_newRef);
+	right_wheel->setRefPoint(lw_newRef);
+
+
+
 	left_wheel->resizedown();
 	right_wheel->resizedown();
 	body->resizedown();
-
-
-	double baseHeight = body->getheight();
-	double wheel1height = left_wheel->getradius();
-	double wheel2height = right_wheel->getradius();
-	double baseWidth = body->getwidth();
-	int remainingdist = (baseWidth - (wheel1height)) / 3;
-
-	point baseref = RefPoint;
-	point newwheely1 = { RefPoint.x - remainingdist,RefPoint.y + (baseHeight / 2) };
-	point newwheely2 = { RefPoint.x + remainingdist,RefPoint.y + (baseHeight / 2) };
-
-	body->setRefPoint(baseref);
-
-
-	left_wheel->setRefPoint(newwheely1);
-	right_wheel->setRefPoint(newwheely2);
 }
 
 
@@ -313,83 +278,52 @@ void rocket::rotate()
 void rocket::resizeup ()
 {
 
-	
+	point top_point = head->getRefPoint();
+	point newTopRef = { (top_point.x - RefPoint.x) * config.sizeup + RefPoint.x, (top_point.y - RefPoint.y) * config.sizeup + RefPoint.y };
 
-	double topHeight = head->gethght();
-	double baseHeight = body->getheight();
-	double basewidth = body->getheight();
-	double wingwidth = right_wing->getbase();
-	double wingheight = right_wing->gethght();
+	point rw_ref = right_wing->getRefPoint();
+	point rw_newRef = { (rw_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (rw_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
 
 
-	point newTopRef = { RefPoint.x, RefPoint.y - (baseHeight) + (topHeight) };
-	point newBaseRef = RefPoint;
-	point newrightwing= { RefPoint.x+((2*basewidth/3)), RefPoint.y + (baseHeight) + (wingheight)};
-	point newleftwing= { RefPoint.x-((2*basewidth)/3), RefPoint.y + (baseHeight) + (wingheight)};
+	point lw_ref = left_wing->getRefPoint();
+	point lw_newRef = { (lw_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (lw_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
 
 
-	int remainingdist = (basewidth - (wingwidth)) ;
-
-	point newwheely1 = { RefPoint.x - remainingdist,RefPoint.y + (baseHeight) };
-	point newwheely2 = { RefPoint.x + remainingdist,RefPoint.y + (baseHeight) };
 
 
 	head->setRefPoint(newTopRef);
-	body->setRefPoint(newBaseRef);
-	right_wing->setRefPoint(newrightwing);
-	left_wing->setRefPoint(newleftwing);
+	right_wing->setRefPoint(rw_newRef);
+	left_wing->setRefPoint(lw_newRef);
 
 	body->resizeup();
 	head->resizeup();
 	left_wing->resizeup();
 	right_wing->resizeup();
-
-
-
-
 }
 
 void rocket::resizedown ()
 {
+	point top_point = head->getRefPoint();
+	point newTopRef = { (top_point.x - RefPoint.x) * config.sizedown + RefPoint.x, (top_point.y - RefPoint.y) * config.sizedown + RefPoint.y };
 
-	
-
-
-
-
-
-	double topHeight = head->gethght();
-	double baseHeight = body->getheight();
-	double basewidth = body->getheight();
-	double wingwidth = right_wing->getbase();
-	double wingheight = right_wing->gethght();
+	point rw_ref = right_wing->getRefPoint();
+	point rw_newRef = { (rw_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (rw_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
 
 
-	point newTopRef = { RefPoint.x, RefPoint.y - (baseHeight / 4) + (topHeight / 4) };
-	point newBaseRef = RefPoint;
-	point newrightwing = { RefPoint.x + (basewidth / 6), RefPoint.y + (baseHeight / 4) + (wingheight / 4) };
-	point newleftwing = { RefPoint.x - (basewidth / 6), RefPoint.y + (baseHeight / 4) + (wingheight / 4) };
+	point lw_ref = left_wing->getRefPoint();
+	point lw_newRef = { (lw_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (lw_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
 
 
-	int remainingdist = (basewidth - (wingwidth));
-
-	point newwheely1 = { RefPoint.x - remainingdist,RefPoint.y + (baseHeight / 4) };
-	point newwheely2 = { RefPoint.x + remainingdist,RefPoint.y + (baseHeight / 4) };
 
 
 	head->setRefPoint(newTopRef);
-	body->setRefPoint(newBaseRef);
-	right_wing->setRefPoint(newrightwing);
-	left_wing->setRefPoint(newleftwing);
+	right_wing->setRefPoint(rw_newRef);
+	left_wing->setRefPoint(lw_newRef);
 
 	body->resizedown();
 	head->resizedown();
 	left_wing->resizedown();
 	right_wing->resizedown();
-
-
-
-
 }
 
 
@@ -442,10 +376,10 @@ void tree::resizeup() {
 	double topHeight = leafs->gethght();
 	double baseHeight = log->getheight();
 
-	point newTopRef = getLeafPoint_afterRot(baseHeight, topHeight);
+	point top_point = leafs->getRefPoint();
+	point newTopRef = { (top_point.x - RefPoint.x) * config.sizeup + RefPoint.x, (top_point.y - RefPoint.y) * config.sizeup + RefPoint.y };
 
 	leafs->setRefPoint(newTopRef);
-	log->setRefPoint(RefPoint);
 	log->resizeup();
 	leafs->resizeup();
 
@@ -458,39 +392,15 @@ void tree::resizedown() {
 	double baseHeight = log->getheight();
 
 
-	point newTopRef = getLeafPoint_afterRot(baseHeight / 4, topHeight / 4);
+	point top_point = leafs->getRefPoint();
+	point newTopRef = { (top_point.x - RefPoint.x) * config.sizedown + RefPoint.x, (top_point.y - RefPoint.y) * config.sizedown + RefPoint.y };
 	point newBaseRef = RefPoint;
 
 
 	leafs->setRefPoint(newTopRef);
-	log->setRefPoint(newBaseRef);
 	log->resizedown();
 	leafs->resizedown();
 
-}
-point tree::getLeafPoint_afterRot(double baseHeight, double topHeight) {
-	double rotation_angle = leafs->get_curAngle();
-	double case0 = ((rotation_angle / 90)) / 4;
-	double case1 = ((rotation_angle / 90) - 1) / 4;
-	double case2 = ((rotation_angle / 90) - 2) / 4;
-	double case3 = ((rotation_angle / 90) - 3) / 4;
-
-	point newTopRef;
-	if (floor(case0) == ceil(case0)) {
-	    newTopRef = { RefPoint.x, int(RefPoint.y - (baseHeight)+(topHeight))};
-	}
-	else if (floor(case1) == ceil(case1)) {
-		newTopRef = { int(RefPoint.x + (baseHeight)-(topHeight)), RefPoint.y };
-	}
-	else if (floor(case2) == ceil(case2)) {
-		newTopRef = { RefPoint.x, int(RefPoint.y + (baseHeight)-(topHeight)) };
-	}
-	else {
-		newTopRef = { int(RefPoint.x - (baseHeight)+(topHeight)), RefPoint.y };
-	}
-
-
-	return newTopRef;
 }
 
 
@@ -581,84 +491,68 @@ void mosque::rotate()
 }
 
 void mosque::resizeup() {
-
-	
-		
-
-		// Calculate new dimensions and positions after resize
-		double new_base_height = base->getheight()*2;
-		double new_base_base = base->getwidth()*2;
-		double new_tower_height = left_tower->getheight()*2;
-		double new_tower_base = left_tower->getwidth()*2;
-		double new_headt_height = left_th->gethght()*2;
-		double new_headt_base = left_th->getbase()*2;
-
-		// Calculate new positions
-		point new_base_ref = RefPoint;
-		point new_left_tower_ref = { RefPoint.x - (new_base_base / 2) - (new_tower_base / 2),
-			RefPoint.y - (new_tower_base / 2) };
-		point new_right_tower_ref = { RefPoint.x + (new_base_base / 2) + (new_tower_base / 2),
-			RefPoint.y - (new_tower_base / 2) };
-		point new_left_th_ref = { new_left_tower_ref.x,
-			new_left_tower_ref.y - (new_tower_height/2)   };
-		point new_right_th_ref = { new_right_tower_ref.x, new_left_th_ref.y  }; // Adjusting the shifting
-
-		point new_oba_ref = { RefPoint.x, RefPoint.y - (new_base_height / 2) };
-
-		// Set new positions for each component
-		base->setRefPoint(new_base_ref);
-		left_tower->setRefPoint(new_left_tower_ref);
-		right_tower->setRefPoint(new_right_tower_ref);
-		left_th->setRefPoint(new_left_th_ref);
-		right_th->setRefPoint(new_right_th_ref);
-		oba->setRefPoint(new_oba_ref);
+	point rt_ref = right_tower->getRefPoint();
+	point rt_newRef = { (rt_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (rt_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
 
 
+	point lt_ref = left_tower->getRefPoint();
+	point lt_newRef = { (lt_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (lt_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
 
-		// Resize each component of the mosque
-		oba->resizeup();
-		base->resizeup();
-		left_tower->resizeup();
-		right_tower->resizeup();
-		left_th->resizeup();
-		right_th->resizeup();
+	point rth_ref = right_th->getRefPoint();
+	point rth_newRef = { (rth_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (rth_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
 
-	}
+	point lth_ref = left_th->getRefPoint();
+	point lth_newRef = { (lth_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (lth_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
+
+	point oba_ref = oba->getRefPoint();
+	point oba_newRef = { (oba_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (oba_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
+
+	left_tower->setRefPoint(lt_newRef);
+	right_tower->setRefPoint(rt_newRef);
+
+	left_th->setRefPoint(lth_newRef);
+	right_th->setRefPoint(rth_newRef);
+
+	oba->setRefPoint(oba_newRef);
+
+
+	oba->resizeup();
+	base->resizeup();
+	left_tower->resizeup();
+	right_tower->resizeup();
+	left_th->resizeup();
+	right_th->resizeup();
+}
 
 
 
 
 void mosque::resizedown() 
 {
-	
+	point rt_ref = right_tower->getRefPoint();
+	point rt_newRef = { (rt_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (rt_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
 
-	// Calculate new dimensions and positions after resize
-	double new_base_height = base->getheight()/2;
-	double new_base_base = base->getwidth()/2;
-	double new_tower_height = left_tower->getheight()/2;
-	double new_tower_base = left_tower->getwidth()/2;
-	double new_headt_height = left_th->gethght()/2;
-	double new_headt_base = left_th->getbase()/2;
 
-	// Calculate new positions
-	point new_base_ref = RefPoint;
-	point new_left_tower_ref = { RefPoint.x - (new_base_base / 2) - (new_tower_base / 2),
-		RefPoint.y - (new_tower_base / 2) };
-	point new_right_tower_ref = { RefPoint.x + (new_base_base / 2) + (new_tower_base / 2),
-		RefPoint.y - (new_tower_base / 2) };
-	point new_left_th_ref = { new_left_tower_ref.x,
-		new_left_tower_ref.y - (new_tower_height / 2) };
-	point new_right_th_ref = { new_right_tower_ref.x, new_left_th_ref.y }; // Adjusting the shifting
+	point lt_ref = left_tower->getRefPoint();
+	point lt_newRef = { (lt_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (lt_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
 
-	point new_oba_ref = { RefPoint.x, RefPoint.y - (new_base_height / 2) };
+	point rth_ref = right_th->getRefPoint();
+	point rth_newRef = { (rth_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (rth_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
 
-	// Set new positions for each component
-	base->setRefPoint(new_base_ref);
-	left_tower->setRefPoint(new_left_tower_ref);
-	right_tower->setRefPoint(new_right_tower_ref);
-	left_th->setRefPoint(new_left_th_ref);
-	right_th->setRefPoint(new_right_th_ref);
-	oba->setRefPoint(new_oba_ref);
+	point lth_ref = left_th->getRefPoint();
+	point lth_newRef = { (lth_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (lth_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
+
+	point oba_ref = oba->getRefPoint();
+	point oba_newRef = { (oba_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (oba_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
+
+	left_tower->setRefPoint(lt_newRef);
+	right_tower->setRefPoint(rt_newRef);
+
+	left_th->setRefPoint(lth_newRef);
+	right_th->setRefPoint(rth_newRef);
+
+	oba->setRefPoint(oba_newRef);
+
 
 	oba->resizedown();
 	base->resizedown();
@@ -666,10 +560,6 @@ void mosque::resizedown()
 	right_tower->resizedown();
 	left_th->resizedown();
 	right_th->resizedown();
-
-
-
-
 }
 
 
@@ -719,49 +609,37 @@ void dumbbell::rotate()
 
 void dumbbell::resizeup() 
 {
+	point leftw_ref = left_w->getRefPoint();
+	point leftw_newRef = { (leftw_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (leftw_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
+
+	point rightw_ref = right_w->getRefPoint();
+	point rightw_newRef = { (rightw_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (rightw_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
+
+
+	left_w->setRefPoint(leftw_newRef);
+	right_w->setRefPoint(rightw_newRef);
+
 	handle->resizeup();
 	left_w->resizeup();
 	right_w->resizeup();
-
-
-	double wheelheight = right_w->getradius();
-	double baseWidth = handle->getwidth();
-	int remainingdist = (baseWidth - (wheelheight)) / 2;
-
-	point baseref = RefPoint;
-	point newwheely1 = { RefPoint.x - remainingdist,RefPoint.y  };
-	point newwheely2 = { RefPoint.x + remainingdist,RefPoint.y  };
-
-	handle->setRefPoint(baseref);
-
-
-	left_w->setRefPoint(newwheely1);
-	right_w->setRefPoint(newwheely2);
 
 }
 
 void dumbbell::resizedown() 
 {
+	point leftw_ref = left_w->getRefPoint();
+	point leftw_newRef = { (leftw_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (leftw_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
+
+	point rightw_ref = right_w->getRefPoint();
+	point rightw_newRef = { (rightw_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (rightw_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
+
+
+	left_w->setRefPoint(leftw_newRef);
+	right_w->setRefPoint(rightw_newRef);
+
 	handle->resizedown();
 	left_w->resizedown();
 	right_w->resizedown();
-
-
-
-	double wheelheight = right_w->getradius();
-	double baseWidth = handle->getwidth();
-	int remainingdist = (baseWidth - (wheelheight)) / 2;
-
-	point baseref = RefPoint;
-	point newwheely1 = { RefPoint.x - remainingdist,RefPoint.y };
-	point newwheely2 = { RefPoint.x + remainingdist,RefPoint.y };
-
-	handle->setRefPoint(baseref);
-
-
-	left_w->setRefPoint(newwheely1);
-	right_w->setRefPoint(newwheely2);
-
 }
 
 
