@@ -21,6 +21,11 @@ point shape::getRefPoint()
 }
 
 
+void shape::move(arrows direction) {
+
+}
+
+
 
 
 

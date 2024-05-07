@@ -1,4 +1,5 @@
 #pragma once
+#include "gameConfig.h"
 
 class game;
 /////////////////////////////////// class operation  //////////////////
@@ -42,6 +43,13 @@ public:
 	virtual void Act();
 };
 
+class operMove :public operation
+{
+	arrows direction;
+public:
+operMove(game* r_pGame, arrows direction);
+virtual void Act();
+};
 
 
 /////////////////////////////////// class operAddSign  //////////////////

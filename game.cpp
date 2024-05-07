@@ -1,5 +1,7 @@
 #include "game.h"
 #include "gameConfig.h"
+#include <iostream>
+using namespace std;
 
 
 
@@ -63,7 +65,7 @@ void game::createGrid()
 	shapesGrid = new grid(gridUpperLeftPoint, config.windWidth, gridHeight, this);
 }
 
-operation* game::createRequiredOperation(toolbarItem clickedItem)
+operation* game::createRequiredOperation(int clickedItem)
 {
 
 	string items[14] = { "ITM_ICECREAM", "ITM_CAR", "ITM_ROCKET","ITM_TREE", "ITM_MOSQUE","ITM_DUMBBELL", "ITM_INCREASE", "ITM_DECREASE", "ITM_ROTATE", "ITM_REFRESH", "ITM_HINT", "ITM_DELETE", "ITM_SELECTLEVEL", "ITM_SAVE" };
@@ -71,7 +73,8 @@ operation* game::createRequiredOperation(toolbarItem clickedItem)
 		printMessage(items[clickedItem]);
 	}
 	else
-		printMessage("PLAYER INFORMATION");
+		printMessage("PLAYER INFORMATION"); // should be fixed, currently this 
+	// always gets printed when arrow keys are presseed
 	operation* op=nullptr;
 	switch (clickedItem)
 	{
@@ -104,6 +107,18 @@ operation* game::createRequiredOperation(toolbarItem clickedItem)
 		break;
 	case ITM_DELETE:
 		shapesGrid->deleteActiveShape();
+		break;
+	case (ARROW_DOWN+ITM_CNT):
+		 op = new operMove(this, ARROW_DOWN);
+		break;
+	case (ARROW_LEFT+ITM_CNT) :
+		op = new operMove(this, ARROW_LEFT);
+		break;
+	case (ARROW_RIGHT+ITM_CNT):
+		op = new operMove(this, ARROW_RIGHT);
+		break;
+	case (ARROW_UP+ITM_CNT):
+		op = new operMove(this, ARROW_UP);
 		break;
 	}
 	return op;
@@ -186,6 +201,7 @@ void game::run()
 	//This function reads the position where the user clicks to determine the desired operation
 	int x, y;
 	bool isExit = false;
+	char cKeyData;
 
 	//Change the title
 	pWind->ChangeTitle("- - - - - - - - - - SHAPE HUNT (CIE 101 / CIE202 - project) - - - - - - - - - -");
@@ -194,7 +210,32 @@ void game::run()
 	{
 		//printMessage("Ready...");
 		//1- Get user click
-		pWind->WaitMouseClick(x, y);	//Get the coordinates of the user click
+
+		pWind->GetMouseClick(x, y);	//Get the coordinates of the user click
+		keytype key_input = pWind->GetKeyPress(cKeyData);
+
+		operation* op = nullptr;
+
+		if (key_input == ARROW) {
+			 switch (cKeyData)
+			 {
+			 case 2:
+				 op = createRequiredOperation(ARROW_DOWN+ITM_CNT);
+				 break;
+			 case 4:
+				 op = createRequiredOperation(ARROW_LEFT+ITM_CNT);
+				 break;
+			 case 6:
+				 op = createRequiredOperation(ARROW_RIGHT+ITM_CNT);
+				 break;
+			 case 8:
+				 op = createRequiredOperation(ARROW_UP+ITM_CNT);
+				 break;
+			 }
+
+		}
+
+
 
 		//2-Explain the user click
 		//If user clicks on the Toolbar, ask toolbar which item is clicked
@@ -203,16 +244,12 @@ void game::run()
 			clickedItem=gameToolbar->getItemClicked(x);
 
 			//3-create the approp operation accordin to item clicked by the user
-			operation* op = createRequiredOperation(clickedItem);
-			if (op) {
-				op->Act();
-				shapesGrid->draw();
-			}
-
-
-			
-
+			op = createRequiredOperation(clickedItem);
 		}	
+		if (op) {
+			op->Act();
+			shapesGrid->draw();
+		}
 
 	} while (clickedItem!=ITM_EXIT);
 }

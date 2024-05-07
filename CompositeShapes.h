@@ -52,6 +52,7 @@ public:
 	virtual void rotate() override;
 	virtual void resizeup() override;
 	virtual void resizedown() override;
+	virtual void move(arrows direction) override;
 
 };
 
@@ -72,6 +73,7 @@ public:
 	virtual void rotate() override;
 	virtual void resizeup() override;
 	virtual void resizedown() override;
+	virtual void move(arrows direction) override;
 };
 
 
@@ -89,6 +91,7 @@ public:
 	virtual void rotate() override;
 	virtual void resizeup() override;
 	virtual void resizedown() override;
+	virtual void move(arrows direction) override;
 };
 
 
@@ -103,7 +106,7 @@ public:
 	virtual void rotate() override;
 	virtual void resizeup() override;
 	virtual void resizedown() override;
-	point getLeafPoint_afterRot(double baseHeight, double topHeight);
+	virtual void move(arrows direction) override;
 };
 
 
@@ -119,6 +122,7 @@ public:
 	virtual void rotate() override;
 	virtual void resizeup() override;
 	virtual void resizedown() override;
+	virtual void move(arrows direction) override;
 };
 
 class dumbbell : public shape
@@ -133,4 +137,5 @@ public:
 	virtual void rotate() override;
 	virtual void resizeup() override;
 	virtual void resizedown() override;
+	virtual void move(arrows direction) override;
 };

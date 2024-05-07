@@ -2,6 +2,7 @@
 #include <string>
 using namespace std;
 #include "CMUgraphicsLib\CMUgraphics.h"
+#include "gameConfig.h"
 
 class game;     //forward declaration
 
@@ -46,8 +47,7 @@ public:
 	virtual void resizedown() = 0;
 	point getRefPoint();
 	
-	//Resize the shape
-	//virtual void move() = 0;		//Move the shape
+	virtual void move(arrows direction);		//Move the shape
 	//virtual void save(ofstream &OutFile) = 0;	//Save the shape parameters to the file
 	//virtual void load(ifstream &Infile) = 0;	//Load the shape parameters to the file
 

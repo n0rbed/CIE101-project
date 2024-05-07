@@ -34,7 +34,7 @@ public:
 	grid* getGrid() const;		//returns a pointer to the shapes grid
 
 	//creates an operation according to the toolbar item clicked
-	operation* createRequiredOperation(toolbarItem clickedItem);
+	operation* createRequiredOperation(int clickedItem);
 
 
 	int* getScore() const;

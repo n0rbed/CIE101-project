@@ -46,8 +46,7 @@ void operResizeUp::Act()
 	if (activeShape)
 	{
 		activeShape->resizeup();
-		pGrid->draw();
-
+		pGrid->deleteActiveShape();
 	}
 }
 
@@ -68,8 +67,8 @@ void operResizeDown::Act()
 
 	if (activeShape) 
 	{
-		pGrid->draw();
 		activeShape->resizedown();
+		pGrid->deleteActiveShape();
 	}
 }
 
@@ -77,7 +76,22 @@ void operResizeDown::Act()
 
 
 
+operMove::operMove(game* r_pGame, arrows direction) :operation(r_pGame)
+{
+	this->direction = direction;
+}
 
+void operMove::Act() {
+	grid* pGrid = pGame->getGrid();
+	shape* activeShape = pGrid->getactiveshape();
+	
+	if (activeShape) {
+		activeShape->move(direction);
+		pGrid->deleteActiveShape();
+	}
+	
+
+}
 
 
 

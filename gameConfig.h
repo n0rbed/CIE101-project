@@ -11,7 +11,6 @@ struct
 	double sizedown=0.5;
 
 
-
 	int	windWidth=1200, windHeight=600,	//Window width and height
 		wx=5, wy=5,			//Window starting coordinates
 
@@ -108,4 +107,10 @@ enum toolbarItem //The items of the  toolbar (you should add more items)
 };
 
 
-
+enum arrows
+{
+	ARROW_DOWN,
+	ARROW_LEFT,
+	ARROW_RIGHT,
+	ARROW_UP
+};

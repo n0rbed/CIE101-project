@@ -107,6 +107,13 @@ void iceCream::resizedown()
 	cone->resizedown();
 }
 
+void iceCream::move(arrows direction)
+{
+	cream->move(direction);
+	cone->move(direction);
+	RefPoint = cream->getRefPoint();
+}
+
 
 
 
@@ -197,6 +204,15 @@ void car::resizedown()
 	left_wheel->resizedown();
 	right_wheel->resizedown();
 	body->resizedown();
+}
+
+void car::move(arrows direction)
+{
+	left_wheel->move(direction);
+	right_wheel->move(direction);
+	body->move(direction);
+
+	RefPoint = body->getRefPoint();
 }
 
 
@@ -326,6 +342,16 @@ void rocket::resizedown ()
 	right_wing->resizedown();
 }
 
+void rocket::move(arrows direction)
+{
+	body->move(direction);
+	head->move(direction);
+	left_wing->move(direction);
+	right_wing->move(direction);
+
+	RefPoint = body->getRefPoint();
+}
+
 
 
 
@@ -341,8 +367,6 @@ tree::tree(game* r_pGame, point ref) : shape(r_pGame, ref) {
 
 	log = new Rect(r_pGame, log_ref, config.treeShape.bodyHeight, config.treeShape.bodyBase);
 	leafs = new triangle(r_pGame, leaf_ref, config.treeShape.leafBase, (-1)*config.treeShape.leafHeight);
-
-
 }
 
 void tree::draw() const {
@@ -365,8 +389,6 @@ void tree::rotate() {
 
 	log->rotate();
 	leafs->rotate();
-
-
 }
 
 
@@ -401,6 +423,14 @@ void tree::resizedown() {
 	log->resizedown();
 	leafs->resizedown();
 
+}
+
+void tree::move(arrows direction)
+{
+	leafs->move(direction);
+	log->move(direction);
+	
+	RefPoint = log->getRefPoint();
 }
 
 
@@ -562,6 +592,18 @@ void mosque::resizedown()
 	right_th->resizedown();
 }
 
+void mosque::move(arrows direction)
+{
+	oba->move(direction);
+	base->move(direction);
+	left_tower->move(direction);
+	right_tower->move(direction);
+	left_th->move(direction);
+	right_th->move(direction);
+	
+	RefPoint = base->getRefPoint();
+}
+
 
 
 
@@ -640,6 +682,15 @@ void dumbbell::resizedown()
 	handle->resizedown();
 	left_w->resizedown();
 	right_w->resizedown();
+}
+
+void dumbbell::move(arrows direction)
+{
+	handle->move(direction);
+	left_w->move(direction);
+	right_w->move(direction);
+
+	RefPoint = handle->getRefPoint();
 }
 
 

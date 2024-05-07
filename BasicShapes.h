@@ -24,6 +24,7 @@ public:
 	virtual void rotate() override;
 	virtual void resizeup() override;
 	virtual void resizedown() override;
+	virtual void move(arrows direction) override;
 	point getRefPoint()const;
 
 
@@ -54,6 +55,7 @@ public:
 	virtual void rotate() override;
 	virtual void resizeup() override;
 	virtual void resizedown() override;
+	virtual void move(arrows direction) override;
 
 
 	 int getradius() const
@@ -85,6 +87,7 @@ public:
 	virtual void rotate() override;
 	virtual void resizeup() override;
 	virtual void resizedown() override;
+	virtual void move(arrows direction) override;
 	point getRefPoint()const;
 	double get_curAngle() const;
 

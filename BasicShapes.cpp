@@ -7,6 +7,24 @@
 using namespace std;
 
 
+point move_ref(point RefPoint, arrows direction) {
+	switch (direction)
+	{
+	case ARROW_DOWN:
+		RefPoint = { RefPoint.x, RefPoint.y + 50 };
+		break;
+	case ARROW_LEFT:
+		RefPoint = { RefPoint.x - 50, RefPoint.y};
+		break;
+	case ARROW_RIGHT:
+		RefPoint = { RefPoint.x + 50, RefPoint.y};
+		break;
+	case ARROW_UP:
+		RefPoint = { RefPoint.x, RefPoint.y - 50 };
+		break;
+	}
+	return RefPoint;
+}
 ////////////////////////////////////////////////////  class Rect  ///////////////////////////////////////
 
 Rect::Rect(game* r_pGame, point ref, int r_hght, int r_wdth):shape(r_pGame,ref)
@@ -55,6 +73,12 @@ void Rect::resizedown()
 
 }
 
+void Rect::move(arrows direction)
+{
+	RefPoint = move_ref(RefPoint, direction);
+}
+
+
 
 
 
@@ -93,6 +117,11 @@ void circle::resizedown()
 {
 	rad = rad * config.sizedown;
 
+}
+
+void circle::move(arrows direction)
+{
+	RefPoint = move_ref(RefPoint, direction);
 }
 
 
@@ -204,6 +233,12 @@ void triangle::draw() const
 	{
 		base = base * config.sizedown;
 		height = height * config.sizedown;
+		update_tpoints();
+	}
+
+	void triangle::move(arrows direction)
+	{
+		RefPoint = move_ref(RefPoint, direction);
 		update_tpoints();
 	}
 
