@@ -47,7 +47,7 @@ public:
 	virtual void resizedown() = 0;
 	point getRefPoint();
 	
-	virtual void move(arrows direction);		//Move the shape
+	virtual void move(arrows direction) = 0;		//Move the shape
 	//virtual void save(ofstream &OutFile) = 0;	//Save the shape parameters to the file
 	//virtual void load(ifstream &Infile) = 0;	//Load the shape parameters to the file
 

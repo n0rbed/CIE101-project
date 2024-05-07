@@ -48,6 +48,13 @@ void Sign::resizedown()
 	top->resizedown();
 }
 
+void Sign::move(arrows direction)
+{
+	base->move(direction);
+	top->move(direction);
+	RefPoint = top->getRefPoint();
+}
+
 
 ////////////////////////////////////////////////////  class ice cream  ///////////////////////////////////////
 iceCream::iceCream(game* r_pGame, point ref) :shape(r_pGame, ref)

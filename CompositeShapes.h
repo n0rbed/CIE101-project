@@ -32,6 +32,7 @@ public:
 	virtual void rotate() override;
 	virtual void resizeup() override;
 	virtual void resizedown() override;
+	virtual void move(arrows direction) override;
 
 
 
