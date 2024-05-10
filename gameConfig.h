@@ -26,8 +26,8 @@ struct
 	int gridHeight = int(remainingHeight * (2 / 3.0)); 		//The grid is where bricks can be drawn
 
 	//Default colors
-	color	penColor = RED,			//color used to draw borders/write messages
-			fillColor = RED,			//shapes fill color (Default)
+	color	penColor = BLACK,			//color used to draw borders/write messages
+			fillColor = BLACK,			//shapes fill color (Default)
 			bkGrndColor= LAVENDER,		//Screen Background color
 			statusBarColor = LIGHTSEAGREEN;	//background color of the status
 	int penWidth=3;			//width of the pen that draws shapes
@@ -63,8 +63,8 @@ struct
 
 	}rocketShape;
 	struct {
-		int bodyBase = 50;
-		int bodyHeight = 150;
+		int bodyBase = 30;
+		int bodyHeight = 100;
 		int leafBase = 120;
 		int leafHeight = 100;
 	}treeShape;

@@ -27,6 +27,7 @@ class Sign :public shape
 	Rect* top;
 public:
 	Sign(game* r_pGame, point ref);
+	~Sign();
 
 	virtual void draw() const override;
 	virtual void rotate() override;
@@ -48,6 +49,7 @@ class iceCream :public shape
 
 public:
 	iceCream(game* r_pGame, point ref);
+	~iceCream();
 
 	virtual void draw() const override;
 	virtual void rotate() override;
@@ -69,6 +71,7 @@ class car : public shape
 	
 public:
 	car(game* r_pGame, point ref);
+	~car();
 
 	virtual void draw() const override;
 	virtual void rotate() override;
@@ -87,6 +90,7 @@ class rocket : public shape
 	triangle* right_wing;
 public:
 	rocket(game* r_pGame, point ref);
+	~rocket();
 
 	virtual void draw() const override;
 	virtual void rotate() override;
@@ -102,6 +106,7 @@ class tree : public shape
 	triangle* leafs;
 public:
 	tree(game* r_pGame, point ref);
+	~tree();
 
 	virtual void draw() const override;
 	virtual void rotate() override;
@@ -118,6 +123,7 @@ class mosque : public shape
 	circle* oba;
 public:
 	mosque(game* r_pGame, point ref);
+	~mosque();
 
 	virtual void draw() const override;
 	virtual void rotate() override;
@@ -133,6 +139,7 @@ class dumbbell : public shape
 	circle* right_w;
 public:
 	dumbbell(game* r_pGame, point ref);
+	~dumbbell();
 
 	virtual void draw() const override;
 	virtual void rotate() override;

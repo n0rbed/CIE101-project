@@ -89,7 +89,21 @@ bool grid::addShape(shape* newShape)
 {
 	//TODO:
 	// 1- Check that the shape can be drawn witout being clipped by grid boundaries
-	
+	// max shape dimension
+	int max_shapeD = 200;
+	int max_window_width = width / 2;
+	int min_window_height = uprLeft.y;
+	int max_window_height = uprLeft.y + height;
+	point ref = newShape->getRefPoint();
+
+	if (ref.x + max_shapeD > max_window_width ||
+		ref.x - max_shapeD < 0 ||
+		ref.y - max_shapeD < min_window_height ||
+		ref.y + max_shapeD > max_window_height)
+	{
+		return false;
+	}
+
 	// 2- check shape count doesn't exceed maximum count
 	if (shapeCount + 1 == MaxShapeCount) { return false; }
 	// return false if any of the checks fail
@@ -113,7 +127,7 @@ void grid::generate_level(int level_n)
 	int y_lb = uprLeft.y/10;
 
 
-
+	shape* new_shape = nullptr;
 	for (int i = 0; i < n_shapes; i++) {
 		int shape_t = (rand() % (6)) + 1;
 
@@ -125,7 +139,6 @@ void grid::generate_level(int level_n)
 		// from negative 1 to 1, where negative means size down
 		int n_size = (rand() % (1+1+1)) - 1;
 
-		shape* new_shape = nullptr;
 		switch (shape_t) {
 			case 1:
 				new_shape = new iceCream(pGame, ref);
@@ -161,9 +174,12 @@ void grid::generate_level(int level_n)
 			new_shape->resizedown();
 		}
 
+
 		if (!addShape(new_shape))
 		{
+			clearGridArea();
 			delete new_shape;
+			new_shape = nullptr;
 			i--;
 		}
 	}

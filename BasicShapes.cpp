@@ -34,6 +34,10 @@ Rect::Rect(game* r_pGame, point ref, int r_hght, int r_wdth):shape(r_pGame,ref)
 	wdth = r_wdth;
 }
 
+Rect::~Rect()
+{
+}
+
 void Rect::draw() const
 {
 	window* pW = pGame->getWind();	//get interface window
@@ -87,6 +91,11 @@ void Rect::move(arrows direction)
 circle::circle(game* r_pGame, point ref, int r):shape(r_pGame,ref)
 {
 	rad = r;
+}
+
+circle::~circle()
+{
+	cout << "circle destructor called" << endl;
 }
 
 void circle::draw() const
@@ -156,6 +165,10 @@ triangle::triangle(game* r_pGame, point ref, int r_base, int r_height):shape(r_p
 	height = r_height;
 	
 	update_tpoints();
+}
+
+triangle::~triangle()
+{
 }
 
 void triangle::draw() const

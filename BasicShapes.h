@@ -19,6 +19,7 @@ class Rect:public shape
 	
 public:
 	Rect(game* r_pGame, point ref, int r_hght, int r_wdth);
+	~Rect();
 
 	virtual void draw() const override;
 	virtual void rotate() override;
@@ -50,6 +51,7 @@ class circle:public shape
 	int rad;
 public:	
 	circle(game* r_pGame, point ref, int r);	//add more parameters for the constructor if needed
+	~circle();
 
 	virtual void draw() const override;
 	virtual void rotate() override;
@@ -81,6 +83,7 @@ class triangle:public shape
 
 public:
 	triangle(game* r_pGame, point ref, int r_base, int r_height);
+	~triangle();
 	void update_tpoints();
 
 	virtual void draw() const override;

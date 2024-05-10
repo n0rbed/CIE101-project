@@ -12,6 +12,12 @@ Sign::Sign(game* r_pGame, point ref):shape(r_pGame, ref)
 	base = new Rect(pGame, baseRef, config.sighShape.baseHeight, config.sighShape.baseWdth);
 }
 
+Sign::~Sign()
+{
+	delete base;
+	delete top;
+}
+
 void Sign::draw() const
 {
 	base->draw();
@@ -66,6 +72,12 @@ iceCream::iceCream(game* r_pGame, point ref) :shape(r_pGame, ref)
 	point triangle_ref = { ref.x, ref.y + triangle_offset};
 	cream = new circle(pGame, circle_ref, config.iceShape.radius);
 	cone = new triangle(pGame, triangle_ref, 2 * config.iceShape.radius, config.iceShape.triangle_height);
+}
+
+iceCream::~iceCream()
+{
+	delete cream;
+	delete cone;
 }
 
 void iceCream::draw() const
@@ -140,6 +152,13 @@ car::car(game* r_pGame, point ref) : shape(r_pGame, ref)
 	right_wheel = new circle(pGame, right_wheel_ref, config.carShape.wheel_radius);
 	body = new Rect(pGame, body_ref, config.carShape.body_height, config.carShape.body_width);
 
+}
+
+car::~car()
+{
+	delete left_wheel;
+	delete right_wheel;
+	delete body;
 }
 
 void car::draw() const
@@ -252,6 +271,13 @@ rocket::rocket(game* r_pGame, point ref) : shape(r_pGame, ref)
 	left_wing = new triangle(r_pGame, left_wing_ref, config.rocketShape.bodyWidth, (-1)*config.rocketShape.bodyWidth /*&left_wing_top*/);
 	right_wing = new triangle(r_pGame, right_wing_ref, config.rocketShape.bodyWidth, (-1)*config.rocketShape.bodyWidth /*&right_wing_top*/);
 
+}
+rocket::~rocket()
+{
+	delete body;
+	delete head;
+	delete left_wing;
+	delete right_wing;
 }
 void rocket::draw() const
 {
@@ -377,6 +403,12 @@ tree::tree(game* r_pGame, point ref) : shape(r_pGame, ref) {
 	leafs = new triangle(r_pGame, leaf_ref, config.treeShape.leafBase, (-1)*config.treeShape.leafHeight);
 }
 
+tree::~tree()
+{
+	delete log;
+	delete leafs;
+}
+
 void tree::draw() const {
 	log->draw();
 	leafs->draw();
@@ -471,6 +503,16 @@ mosque::mosque(game* r_pGame, point ref) : shape(r_pGame, ref) {
 	right_th = new triangle(r_pGame, right_th_ref, config.mosqueShape.headt_base,
 		(-1)*config.mosqueShape.headt_height);
 	oba = new circle(r_pGame, oba_ref, config.mosqueShape.oba_radius);
+}
+
+mosque::~mosque()
+{
+	delete oba;
+	delete base;
+	delete left_tower;
+	delete right_tower;
+	delete left_th;
+	delete right_th;
 }
 
 
@@ -627,6 +669,13 @@ dumbbell::dumbbell(game* r_pGame, point ref) : shape(r_pGame, ref) {
 	left_w = new circle(r_pGame, left_w_ref, config.dShape.d_radius);
 	right_w = new circle(r_pGame, right_w_ref, config.dShape.d_radius);
 	
+}
+dumbbell::~dumbbell()
+{
+	cout << "dumbbell destructor called" << endl;
+	delete handle;
+	delete left_w;
+	delete right_w;
 }
 void dumbbell::draw() const
 {

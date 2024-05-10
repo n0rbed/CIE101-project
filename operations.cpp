@@ -160,8 +160,6 @@ void operAddCar::Act()
 	int xGrid = config.RefX - config.RefX % config.gridSpacing;
 	int yGrid = config.RefY - config.RefX % config.gridSpacing;
 
-	pGame->getGrid()->generate_level(2);
-
 	//take the aligned point as the sign shape ref point
 	point carShapeRef = { xGrid,yGrid };
 

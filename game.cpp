@@ -17,6 +17,7 @@ game::game()
 	//Create and draw the grid
 	createGrid();
 	// randomize shapes here
+	shapesGrid->generate_level(*level);
 	shapesGrid->draw();	//draw the grid and all shapes it contains.
 
 	//Create and clear the status bar

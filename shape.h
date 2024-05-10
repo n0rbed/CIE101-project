@@ -37,6 +37,7 @@ public:
     virtual void draw() const=0;//for a shape to draw itself on the screen
 	void setRefPoint(point p);
 								  
+	virtual ~shape() = 0;
 							  
 	//-- The following functions should be supported by the shape class
 	//-- It should be overridden by each inherited shape
