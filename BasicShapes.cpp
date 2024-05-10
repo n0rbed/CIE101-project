@@ -11,16 +11,16 @@ point move_ref(point RefPoint, arrows direction) {
 	switch (direction)
 	{
 	case ARROW_DOWN:
-		RefPoint = { RefPoint.x, RefPoint.y + 50 };
+		RefPoint = { RefPoint.x, RefPoint.y + config.step };
 		break;
 	case ARROW_LEFT:
-		RefPoint = { RefPoint.x - 50, RefPoint.y};
+		RefPoint = { RefPoint.x - config.step, RefPoint.y};
 		break;
 	case ARROW_RIGHT:
-		RefPoint = { RefPoint.x + 50, RefPoint.y};
+		RefPoint = { RefPoint.x + config.step, RefPoint.y};
 		break;
 	case ARROW_UP:
-		RefPoint = { RefPoint.x, RefPoint.y - 50 };
+		RefPoint = { RefPoint.x, RefPoint.y - config.step };
 		break;
 	}
 	return RefPoint;

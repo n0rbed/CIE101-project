@@ -10,6 +10,8 @@ struct
 	double sizeup = 2;
 	double sizedown=0.5;
 
+	int step = 10;
+
 
 	int	windWidth=1200, windHeight=600,	//Window width and height
 		wx=5, wy=5,			//Window starting coordinates

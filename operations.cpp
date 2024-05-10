@@ -1,6 +1,8 @@
 #include "operations.h"
 #include "game.h"
 #include "CompositeShapes.h"
+#include <iostream>
+using namespace std;
 /////////////////////////////////// class operation  //////////////////
 operation::operation(game* r_pGame)
 {
@@ -158,6 +160,8 @@ void operAddCar::Act()
 	int xGrid = config.RefX - config.RefX % config.gridSpacing;
 	int yGrid = config.RefY - config.RefX % config.gridSpacing;
 
+	pGame->getGrid()->generate_level(2);
+
 	//take the aligned point as the sign shape ref point
 	point carShapeRef = { xGrid,yGrid };
 
@@ -257,7 +261,9 @@ void operAddTree::Act()
 
 	//align reference point to the nearest grid point
 	int xGrid = config.RefX - config.RefX % config.gridSpacing;
+	cout << "tree x: " << xGrid << endl;
 	int yGrid = config.RefY - config.RefX % config.gridSpacing;
+	cout << "tree y: " << yGrid << endl;
 
 	//take the aligned point as the sign shape ref point
 	point treeShapeRef = { xGrid,yGrid };

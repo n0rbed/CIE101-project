@@ -52,6 +52,7 @@ void Sign::move(arrows direction)
 {
 	base->move(direction);
 	top->move(direction);
+
 	RefPoint = top->getRefPoint();
 }
 
