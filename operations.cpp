@@ -26,7 +26,7 @@ void operrotate::Act()
 	if (activeShape) 
 	{
 		activeShape->rotate();
-		pGrid->deleteActiveShape();
+		pGrid->draw();
 
 	}
 }
@@ -48,7 +48,7 @@ void operResizeUp::Act()
 	if (activeShape)
 	{
 		activeShape->resizeup();
-		pGrid->deleteActiveShape();
+		pGrid->draw();
 	}
 }
 
@@ -70,7 +70,7 @@ void operResizeDown::Act()
 	if (activeShape) 
 	{
 		activeShape->resizedown();
-		pGrid->deleteActiveShape();
+		pGrid->draw();
 	}
 }
 
@@ -89,7 +89,7 @@ void operMove::Act() {
 	
 	if (activeShape) {
 		activeShape->move(direction);
-		pGrid->deleteActiveShape();
+		pGrid->draw();
 	}
 	
 

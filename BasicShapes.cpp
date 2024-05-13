@@ -101,8 +101,9 @@ circle::~circle()
 void circle::draw() const
 {
 	window* pW = pGame->getWind();	//get interface window
-	pW->SetPen(borderColor, config.penWidth);
-	pW->SetBrush(fillColor);
+	pW->SetPen(config.penColor, config.penWidth);
+	pW->SetBrush(config.fillColor);
+
 	pW->DrawCircle(RefPoint.x, RefPoint.y, rad, FILLED);
 }
 
@@ -177,9 +178,8 @@ void triangle::draw() const
 
 
 	window* pW = pGame->getWind();	//get interface window
-	pW->SetPen(borderColor, config.penWidth);
-	pW->SetBrush(fillColor);
-
+	pW->SetPen(config.penColor, config.penWidth);
+	pW->SetBrush(config.fillColor);
 
 	pW->DrawTriangle(upperLeft.x, upperLeft.y, upperRight.x, upperRight.y, top_point.x, top_point.y);
 
@@ -216,10 +216,6 @@ void triangle::draw() const
 		}
 
 		// Redraw the triangle with the new vertices
-		window* pW = pGame->getWind();
-		pW->SetPen(config.penColor, config.penWidth);
-		pW->SetBrush(config.fillColor);
-
 		upperLeft.x = vertices[0].x;
 		upperLeft.y = vertices[0].y;
 

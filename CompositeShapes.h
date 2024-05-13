@@ -45,6 +45,8 @@ class iceCream :public shape
 {
 	circle* cream;
 	triangle* cone;
+	point triangle_ref;
+	point circle_ref;
 	
 
 public:
@@ -67,6 +69,7 @@ class car : public shape
 	circle* left_wheel;
 	circle* right_wheel;
 	Rect* body;
+	point body_ref, left_wheel_ref, right_wheel_ref;
 	
 	
 public:
@@ -88,6 +91,7 @@ class rocket : public shape
 	triangle* head;
 	triangle* left_wing;
 	triangle* right_wing;
+	point body_ref, head_ref, left_wing_ref, right_wing_ref;
 public:
 	rocket(game* r_pGame, point ref);
 	~rocket();
@@ -104,6 +108,7 @@ class tree : public shape
 {
 	Rect* log;
 	triangle* leafs;
+	point log_ref, leaf_ref;
 public:
 	tree(game* r_pGame, point ref);
 	~tree();
@@ -121,6 +126,7 @@ class mosque : public shape
 	Rect* base, *left_tower, *right_tower;
 	triangle* left_th, *right_th;
 	circle* oba;
+	point base_ref, left_tower_ref, right_tower_ref, left_th_ref, right_th_ref, oba_ref;
 public:
 	mosque(game* r_pGame, point ref);
 	~mosque();
@@ -137,6 +143,8 @@ class dumbbell : public shape
 	Rect* handle; 
 	circle* left_w;
 	circle* right_w;
+	point handle_ref, left_w_ref, right_w_ref;
+
 public:
 	dumbbell(game* r_pGame, point ref);
 	~dumbbell();

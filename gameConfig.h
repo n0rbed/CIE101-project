@@ -105,14 +105,15 @@ enum toolbarItem //The items of the  toolbar (you should add more items)
 	ITM_SELECTLEVEL,
 	ITM_SAVE,
 	ITM_EXIT,
-	ITM_CNT
+	ITM_CNT,
 };
 
 
-enum arrows
+enum arrows 
 {
 	ARROW_DOWN,
 	ARROW_LEFT,
 	ARROW_RIGHT,
-	ARROW_UP
+	ARROW_UP,
+	SPACE
 };

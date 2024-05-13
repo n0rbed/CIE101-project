@@ -11,9 +11,9 @@ class game
 {
 
 	/// Add more members if needed
-	int* score = new int(0);
-	int* lives = new int(5);
-	int* level = new int(2);
+	int score = 0;
+	int lives = 5;
+	int level = 2;
 	toolbar* gameToolbar;
 	
 	window* pWind;	//Pointer to the CMU graphics window
@@ -36,11 +36,15 @@ public:
 	//creates an operation according to the toolbar item clicked
 	operation* createRequiredOperation(int clickedItem);
 
+	void createPlayerInformation();
+	int getScore() const;
+	int getLives() const;
+	int getLevel() const;
+	void setScore(int s);
+	void setLives(int l);
+	void setLevel(int l);
 
-	int* getScore() const;
-	int* getLives() const;
-	int* getLevel() const;
-
+	
 
 	void run();	//start the game
 

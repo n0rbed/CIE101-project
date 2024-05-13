@@ -41,26 +41,40 @@ toolbar::toolbar(game* pG)
 	//Draw a line under the toolbar
 	pWind->SetPen(DARKBLUE, 3);
 	pWind->DrawLine(0, height,width , height);
+	playerInformation();
+
+	
+	
+}
 
 
-	int* pScore = pG->getScore();
-	auto score = std::to_string(*pScore);  //convert int to string
 
-	int* pLives = pG->getLives();
-	auto lives = std::to_string(*pLives);  //convert int to string
+void toolbar::playerInformation() {
 
-	int* pLevel = pG->getLevel();
-	auto level = std::to_string(*pLevel);  //convert int to string
 
+
+	
+	window* pWind = pGame->getWind();
+	int pScore = pGame->getScore();
+	auto score = std::to_string(pScore);  //convert int to string
+
+	int pLives = pGame->getLives();
+	auto lives = std::to_string(pLives);  //convert int to string
+
+	int pLevel = pGame->getLevel();
+	auto level = std::to_string(pLevel);  //convert int to string
+
+	pWind->SetBrush(WHITE);
+	pWind->SetPen(WHITE, 1);
+	pWind->DrawRectangle((ITM_CNT + 0.1) * config.toolbarItemWidth, 0, (ITM_CNT + 1.5) * config.toolbarItemWidth, 58);
 
 	pWind->SetPen(config.penColor, 50);
 	pWind->SetFont(15, BOLD, BY_NAME, "Arial");
 	pWind->DrawString((ITM_CNT + 0.2) * config.toolbarItemWidth, 0, lives + " LIVES");
 	pWind->DrawString((ITM_CNT + 0.2) * config.toolbarItemWidth, 20, "SCORE = " + score);
 	pWind->DrawString((ITM_CNT + 0.2) * config.toolbarItemWidth, 40, "LEVEL = " + level);
-	
-}
 
+}
 
 
 //handles clicks on toolbar icons, returns ITM_CNT if the click is not inside the toolbar

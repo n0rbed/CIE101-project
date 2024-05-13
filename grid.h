@@ -22,12 +22,13 @@ public:
 	grid(point r_uprleft, int r_width, int r_height, game* r_pGame);
 	~grid();
 	void draw() const;
-	void deleteActiveShape() const;
+	void deleteActiveShape();
 	void clearGridArea() const;
 	bool addShape(shape* newShape);
 	void setActiveShape(shape* actShape);
 	void generate_level(int level_n);
-	
+	void matchingDetection();
+	bool refPoints_checker(int* list, int* list2, int name);
 	shape* grid::getactiveshape() const;
 };
 

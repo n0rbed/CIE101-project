@@ -32,10 +32,15 @@ protected:
     game* pGame;        //pointer to game object
 	color fillColor;	//shape fill color
 	color borderColor;	//shape border color
+	int name;
+	
+	int* ref_list[6];
 public:
+	
     shape(game* r_pGame, point ref);
     virtual void draw() const=0;//for a shape to draw itself on the screen
 	void setRefPoint(point p);
+	void update_color();
 								  
 	virtual ~shape() = 0;
 							  
@@ -47,7 +52,8 @@ public:
 	virtual void resizeup() = 0;
 	virtual void resizedown() = 0;
 	point getRefPoint();
-	
+	int get_name() const;
+	int* get_ref_list() const;
 	virtual void move(arrows direction) = 0;		//Move the shape
 	//virtual void save(ofstream &OutFile) = 0;	//Save the shape parameters to the file
 	//virtual void load(ifstream &Infile) = 0;	//Load the shape parameters to the file

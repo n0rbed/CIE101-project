@@ -17,7 +17,7 @@ game::game()
 	//Create and draw the grid
 	createGrid();
 	// randomize shapes here
-	shapesGrid->generate_level(*level);
+	shapesGrid->generate_level(level);
 	shapesGrid->draw();	//draw the grid and all shapes it contains.
 
 	//Create and clear the status bar
@@ -28,9 +28,7 @@ game::~game()
 {
 	delete pWind;
 	delete shapesGrid;
-	delete score;
-	delete lives;
-	delete level;
+	
 }
 
 
@@ -56,6 +54,12 @@ void game::clearStatusBar() const
 void game::createToolBar()
 {
 	gameToolbar = new toolbar(this);
+}
+
+
+
+void game::createPlayerInformation() {
+	gameToolbar->playerInformation();
 }
 
 void game::createGrid()
@@ -110,6 +114,9 @@ operation* game::createRequiredOperation(int clickedItem)
 	case ITM_DELETE:
 		shapesGrid->deleteActiveShape();
 		break;
+	case ITM_REFRESH:
+		shapesGrid->matchingDetection();
+		break;
 	case (ARROW_DOWN+ITM_CNT):
 		 op = new operMove(this, ARROW_DOWN);
 		break;
@@ -122,9 +129,18 @@ operation* game::createRequiredOperation(int clickedItem)
 	case (ARROW_UP+ITM_CNT):
 		op = new operMove(this, ARROW_UP);
 		break;
+	case SPACE+ITM_CNT:
+		shapesGrid->matchingDetection();
+		break;
 	}
 	return op;
 }
+
+
+
+
+
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -180,20 +196,42 @@ grid* game::getGrid() const
 
 
 
-int* game::getScore() const
+int game::getScore() const
 {
 	return score;
+	
 }
 
-int* game::getLives() const
+int game::getLives() const
 {
 	return lives;
 }
 
-int* game::getLevel() const
+int game::getLevel() const
 {
 	return level;
 }
+
+void game::setScore(int s) 
+{
+	score = s;
+	createPlayerInformation();
+}
+
+void game::setLives(int l) 
+{
+	lives = l;
+	createPlayerInformation();
+}
+
+void game::setLevel(int l)
+{
+	level = l;
+	createPlayerInformation();
+}
+
+
+
 
 
 
@@ -235,6 +273,11 @@ void game::run()
 				 break;
 			 }
 
+		}
+
+		if (key_input == ASCII && cKeyData == ' ')
+		{
+			op = createRequiredOperation(SPACE+ITM_CNT);
 		}
 
 

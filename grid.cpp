@@ -45,9 +45,22 @@ void grid::draw() const
 			//pWind->DrawPixel(c * config.gridSpacing, r * config.gridSpacing + uprLeft.y);
 
 	//Draw ALL shapes
+	color colors[3] = { RED, BLUE, BLACK };
 	for (int i = 0; i < shapeCount; i++)
-			if (shapeList[i])
-				shapeList[i]->draw();	//draw each shape
+	{
+		if (pGame->getLevel() < 3)
+		{
+			config.penColor = colors[i];
+			config.fillColor = colors[i];
+		}
+		if (shapeList[i]) {
+			shapeList[i]->update_color();
+			shapeList[i]->draw();	//draw each shape
+		}
+		config.penColor = BLACK;
+		config.fillColor = BLACK;
+
+	}
 
 	//Draw the active shape
 	if(activeShape)
@@ -55,7 +68,7 @@ void grid::draw() const
 }
 
 
-void grid::deleteActiveShape() const
+void grid::deleteActiveShape()
 {
 	clearGridArea();
 	window* pWind = pGame->getWind();
@@ -73,6 +86,11 @@ void grid::deleteActiveShape() const
 	for (int i = 0; i < shapeCount; i++)
 		if (shapeList[i])
 			shapeList[i]->draw();	//draw each shape
+	if (activeShape) {
+		delete activeShape;
+		activeShape = nullptr;
+	}
+
 }
 
 
@@ -197,4 +215,67 @@ shape* grid::getactiveshape() const
 	return activeShape;
 }
 
+bool grid::refPoints_checker(int* list, int* list2, int name)
+{
+	if (name == 2 || name == 6) {
+		if (list[0] != list2[0] || list[1] != list2[1]) {
+			return false;
+		}
+		if (list[2] == list2[2] && list[3] == list2[3] && list[4] == list2[4] && list[5] == list2[5]) {
+			return true;
+		}
+		if (list[2] == list2[4] && list[3] == list2[5] && list[4] == list2[2] && list[5] == list2[3]) {
+			return true;
+		}
+		return false;
+	}
 
+	else if (name == 1 || name == 4 || name == 3) {
+
+		for (int i = 0; i < 4; i++) {
+			if (list[i] && list2[i]) {
+				if (list[i] != list2[i]) {
+					cout << "      diff is     " << i << "           " << list[i] << "          not       " << list2[i] << "              ";
+					return false;
+				}
+			}
+		}
+
+	}
+
+	else
+		for (int i = 0; i < 6; i++) {
+			if (list[i] && list2[i]) {
+				if (list[i] != list2[i]) {
+					cout<<"      diff is     "<< i <<"           " << list[i] << "          not       " << list2[i] << "              ";
+					return false;
+				}
+			}
+		}
+	return true;
+}
+
+
+void grid::matchingDetection()
+{
+	
+	
+	for (int i = 0; i < MaxShapeCount; i++)
+	{
+		
+		if (activeShape && shapeList[i]) {
+			if (activeShape->get_name() == shapeList[i]->get_name()) {
+				if (refPoints_checker(activeShape->get_ref_list(), shapeList[i]->get_ref_list(),activeShape->get_name())) {
+					delete shapeList[i];
+					shapeList[i] = nullptr;
+					deleteActiveShape();
+					pGame->setScore(pGame->getScore()+3);
+				}
+			}
+		}
+
+	}
+	
+	pGame->setScore(pGame->getScore() -1);
+	
+}
