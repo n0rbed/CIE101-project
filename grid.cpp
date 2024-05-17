@@ -105,28 +105,13 @@ void grid::clearGridArea() const
 //Adds a shape to the randomly created shapes list.
 bool grid::addShape(shape* newShape)
 {
-	//TODO:
 	// 1- Check that the shape can be drawn witout being clipped by grid boundaries
-	// max shape dimension
-	int max_shapeD = 200;
-	int max_window_width = width / 2;
-	int min_window_height = uprLeft.y;
-	int max_window_height = uprLeft.y + height;
-	point ref = newShape->getRefPoint();
-
-	if (ref.x + max_shapeD > max_window_width ||
-		ref.x - max_shapeD < 0 ||
-		ref.y - max_shapeD < min_window_height ||
-		ref.y + max_shapeD > max_window_height)
-	{
-		return false;
-	}
+	if (!(newShape->check_boundary())) { return false; }
 
 	// 2- check shape count doesn't exceed maximum count
 	if (shapeCount + 1 == MaxShapeCount) { return false; }
-	// return false if any of the checks fail
-	
-	//Here we assume that the above checks are passed
+
+	// checks are passed
 	shapeList[shapeCount++] = newShape;
 	return true;
 }
@@ -201,6 +186,21 @@ void grid::generate_level(int level_n)
 			i--;
 		}
 	}
+}
+
+point grid::get_uprLeft() const
+{
+	return uprLeft;
+}
+
+int grid::get_h() const
+{
+	return height;
+}
+
+int grid::get_w() const
+{
+	return width;
 }
 
 void grid::setActiveShape(shape* actShape)
@@ -281,6 +281,7 @@ void grid::matchingDetection()
 					if (nextLevel()) {
 						pGame->setLevel(pGame->getLevel() + 1);
 					}
+					draw();
 				}
 			}
 		}

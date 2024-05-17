@@ -39,7 +39,7 @@ public:
 	
     shape(game* r_pGame, point ref);
     virtual void draw() const=0;//for a shape to draw itself on the screen
-	void setRefPoint(point p);
+	virtual void setRefPoint(point p);
 	void update_color();
 								  
 	virtual ~shape() = 0;
@@ -51,6 +51,7 @@ public:
 	virtual void rotate() = 0;	//Rotate the shape
 	virtual void resizeup() = 0;
 	virtual void resizedown() = 0;
+	virtual bool check_boundary() = 0;
 	point getRefPoint();
 	int get_name() const;
 	int* get_ref_list() const;

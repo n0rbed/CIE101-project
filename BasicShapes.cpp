@@ -25,6 +25,34 @@ point move_ref(point RefPoint, arrows direction) {
 	}
 	return RefPoint;
 }
+
+bool check_points(int min_h, int max_h, int min_w, int max_w, grid* gridP)
+{
+	int grid_height = gridP->get_h();
+	int grid_width = gridP->get_w();
+
+	point uprLeft = gridP->get_uprLeft();
+	point lower_left = { uprLeft.x, uprLeft.y + grid_height };
+	point uprRight = { uprLeft.x + grid_width, uprLeft.y };
+	if (min_h < uprLeft.y)
+	{
+		return false;
+	}
+	if (max_h > lower_left.y) 
+	{
+		return false;
+	}
+	if (max_w > uprRight.x)
+	{
+		return false;
+	}
+	if (min_w < uprLeft.x)
+	{
+		return false;
+	}
+
+	return true;
+}
 ////////////////////////////////////////////////////  class Rect  ///////////////////////////////////////
 
 Rect::Rect(game* r_pGame, point ref, int r_hght, int r_wdth):shape(r_pGame,ref)
@@ -82,6 +110,24 @@ void Rect::move(arrows direction)
 	RefPoint = move_ref(RefPoint, direction);
 }
 
+bool Rect::check_boundary()
+{
+
+	grid* gridP = pGame->getGrid();
+
+	int min_h = RefPoint.y - (hght*0.5);
+	int max_h = RefPoint.y + (hght*0.5);
+	int min_w = RefPoint.x - (wdth*0.5);
+	int max_w = RefPoint.x + (wdth*0.5);
+
+	if (!check_points(min_h, max_h, min_w, max_w, gridP))
+	{
+		return false;
+	}
+
+	return true;
+}
+
 
 
 
@@ -95,7 +141,6 @@ circle::circle(game* r_pGame, point ref, int r):shape(r_pGame,ref)
 
 circle::~circle()
 {
-	cout << "circle destructor called" << endl;
 }
 
 void circle::draw() const
@@ -106,11 +151,6 @@ void circle::draw() const
 
 	pW->DrawCircle(RefPoint.x, RefPoint.y, rad, FILLED);
 }
-
-
-
-
-
 
 void circle::rotate()
 {
@@ -134,6 +174,23 @@ void circle::move(arrows direction)
 	RefPoint = move_ref(RefPoint, direction);
 }
 
+
+bool circle::check_boundary()
+{
+	grid* gridP = pGame->getGrid();
+
+	int min_h = RefPoint.y - rad;
+	int max_h = RefPoint.y + rad;
+	int min_w = RefPoint.x - rad;
+	int max_w = RefPoint.x + rad;
+
+	if (!check_points(min_h, max_h, min_w, max_w, gridP))
+	{
+		return false;
+	}
+
+	return true;
+}
 
 
 
@@ -185,92 +242,120 @@ void triangle::draw() const
 
 }
 
-	void triangle::rotate()
+void triangle::rotate()
+{
+	// Update rotation angle to rotate by 90 degrees
+
+	current_angle += 90;
+	// Convert angle to radians
+	double angle_rad = current_angle * (M_PI / 180.0);
+
+	// Calculate trigonometric functions
+	double cosTheta = cos(angle_rad);
+	double sinTheta = sin(angle_rad);
+
+	// Define triangle vertices
+	point vertices[3] = { {RefPoint.x - (base / 2),RefPoint.y - (height/2)},
+
+						  {RefPoint.x + (base / 2), RefPoint.y - (height/2)},
+
+						  {RefPoint.x, RefPoint.y + (height/2)} };
+
+	// Rotate each vertex around the reference point
+	for (int i = 0; i < 3; ++i) {
+
+		double newX = cosTheta * (vertices[i].x - RefPoint.x) - sinTheta * (vertices[i].y - RefPoint.y) + RefPoint.x;
+		double newY = sinTheta * (vertices[i].x - RefPoint.x) + cosTheta * (vertices[i].y - RefPoint.y) + RefPoint.y;
+
+		// Update vertex coordinates
+		vertices[i].x = newX;
+		vertices[i].y = newY;
+	}
+
+	// Redraw the triangle with the new vertices
+	upperLeft.x = vertices[0].x;
+	upperLeft.y = vertices[0].y;
+
+	upperRight.x = vertices[1].x;
+	upperRight.y = vertices[1].y;
+
+	top_point.x = vertices[2].x;
+	top_point.y = vertices[2].y;
+
+}
+
+
+
+
+
+void triangle::resizeup()
+{
+	base = base * config.sizeup;
+	height = height * config.sizeup;
+	update_tpoints();
+}
+
+void triangle::resizedown()
+{
+	base = base * config.sizedown;
+	height = height * config.sizedown;
+	update_tpoints();
+}
+
+void triangle::move(arrows direction)
+{
+	point place_holder = RefPoint;
+	RefPoint = move_ref(RefPoint, direction);
+	update_tpoints();
+}
+
+bool triangle::check_boundary()
+{
+	grid* gridP = pGame->getGrid();
+	point points[3] = { upperLeft, upperRight, top_point };
+
+	int min_h = INT_MAX, max_h = INT_MIN, min_w = INT_MAX, max_w = INT_MIN;
+	for (int i = 0; i < 3; i++)
 	{
-		// Update rotation angle to rotate by 90 degrees
-
-		current_angle += 90;
-		// Convert angle to radians
-		double angle_rad = current_angle * (M_PI / 180.0);
-
-		// Calculate trigonometric functions
-		double cosTheta = cos(angle_rad);
-		double sinTheta = sin(angle_rad);
-
-		// Define triangle vertices
-		point vertices[3] = { {RefPoint.x - (base / 2),RefPoint.y - (height/2)},
-
-							  {RefPoint.x + (base / 2), RefPoint.y - (height/2)},
-
-							  {RefPoint.x, RefPoint.y + (height/2)} };
-
-		// Rotate each vertex around the reference point
-		for (int i = 0; i < 3; ++i) {
-
-			double newX = cosTheta * (vertices[i].x - RefPoint.x) - sinTheta * (vertices[i].y - RefPoint.y) + RefPoint.x;
-			double newY = sinTheta * (vertices[i].x - RefPoint.x) + cosTheta * (vertices[i].y - RefPoint.y) + RefPoint.y;
-
-			// Update vertex coordinates
-			vertices[i].x = newX;
-			vertices[i].y = newY;
+		if (points[i].y > max_h)
+		{
+			max_h = points[i].y;
 		}
-
-		// Redraw the triangle with the new vertices
-		upperLeft.x = vertices[0].x;
-		upperLeft.y = vertices[0].y;
-
-		upperRight.x = vertices[1].x;
-		upperRight.y = vertices[1].y;
-
-		top_point.x = vertices[2].x;
-		top_point.y = vertices[2].y;
-
+		if (points[i].y < min_h)
+		{
+			min_h = points[i].y;
+		}
+		if (points[i].x > max_w)
+		{
+			max_w = points[i].x;
+		}
+		if (points[i].x < min_w)
+		{
+			min_w = points[i].x;
+		}
 	}
 
-	
-
-
-
-	void triangle::resizeup()
+	if (!check_points(min_h, max_h, min_w, max_w, gridP))
 	{
-		base = base * config.sizeup;
-		height = height * config.sizeup;
-		update_tpoints();
+		return false;
 	}
 
-	void triangle::resizedown()
-	{
-		base = base * config.sizedown;
-		height = height * config.sizedown;
-		update_tpoints();
-	}
-
-	void triangle::move(arrows direction)
-	{
-		RefPoint = move_ref(RefPoint, direction);
-		update_tpoints();
-	}
+	return true;
+}
 
 
-	point triangle::getRefPoint() const
-	{
-		return RefPoint;
-	}
 
-	double triangle::get_curAngle() const
-	{
-		return current_angle;
-	}
+double triangle::get_curAngle() const
+{
+	return current_angle;
+}
 
-	point circle::getRefPoint() const
-	{
-		return RefPoint;
-	}
-	
-	point Rect::getRefPoint() const
-	{
-		return RefPoint;
-	}
+void triangle::setRefPoint(point p)
+{
+	RefPoint = p;
+	update_tpoints();
+}
+
 
 
 

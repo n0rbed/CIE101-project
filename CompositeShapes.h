@@ -34,7 +34,7 @@ public:
 	virtual void resizeup() override;
 	virtual void resizedown() override;
 	virtual void move(arrows direction) override;
-
+	virtual bool check_boundary() override;
 
 
 };
@@ -58,6 +58,7 @@ public:
 	virtual void resizeup() override;
 	virtual void resizedown() override;
 	virtual void move(arrows direction) override;
+	virtual bool check_boundary() override;
 
 };
 
@@ -81,6 +82,8 @@ public:
 	virtual void resizeup() override;
 	virtual void resizedown() override;
 	virtual void move(arrows direction) override;
+	virtual bool check_boundary() override;
+
 };
 
 
@@ -101,6 +104,7 @@ public:
 	virtual void resizeup() override;
 	virtual void resizedown() override;
 	virtual void move(arrows direction) override;
+	virtual bool check_boundary() override;
 };
 
 
@@ -118,6 +122,7 @@ public:
 	virtual void resizeup() override;
 	virtual void resizedown() override;
 	virtual void move(arrows direction) override;
+	virtual bool check_boundary() override;
 };
 
 
@@ -136,6 +141,7 @@ public:
 	virtual void resizeup() override;
 	virtual void resizedown() override;
 	virtual void move(arrows direction) override;
+	virtual bool check_boundary() override;
 };
 
 class dumbbell : public shape
@@ -154,4 +160,5 @@ public:
 	virtual void resizeup() override;
 	virtual void resizedown() override;
 	virtual void move(arrows direction) override;
+	virtual bool check_boundary() override;
 };

@@ -24,9 +24,16 @@ public:
 	void draw() const;
 	void deleteActiveShape();
 	void clearGridArea() const;
-	bool addShape(shape* newShape);
 	void setActiveShape(shape* actShape);
+
+	bool addShape(shape* newShape);
 	void generate_level(int level_n);
+
+	// bounds
+	point get_uprLeft() const;
+	int get_h() const;
+	int get_w() const;
+	
 	bool nextLevel();
 	void matchingDetection();
 	bool refPoints_checker(int* list, int* list2, int name);

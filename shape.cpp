@@ -23,12 +23,12 @@ void shape::setRefPoint(point p)
 
 shape::~shape()
 {
-	cout << "shape destructor called" << endl;
 	for (int i = 0; i < 6; i++) {
 		ref_list[i] = nullptr;
 	}
 	
 }
+
 
 
 point shape::getRefPoint()

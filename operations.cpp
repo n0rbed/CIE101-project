@@ -255,9 +255,7 @@ void operAddTree::Act()
 
 	if (!pGrid->getactiveshape()) {
 		int xGrid = config.RefX - config.RefX % config.gridSpacing;
-		cout << "tree x: " << xGrid << endl;
 		int yGrid = config.RefY - config.RefX % config.gridSpacing;
-		cout << "tree y: " << yGrid << endl;
 
 		//take the aligned point as the sign shape ref point
 		point treeShapeRef = { xGrid,yGrid };

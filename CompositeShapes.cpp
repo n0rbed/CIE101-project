@@ -62,6 +62,14 @@ void Sign::move(arrows direction)
 	RefPoint = top->getRefPoint();
 }
 
+bool Sign::check_boundary()
+{
+	if (base->check_boundary() && top->check_boundary())
+	{
+		return true;
+	}
+	return false;
+}
 
 ////////////////////////////////////////////////////  class ice cream  ///////////////////////////////////////
 iceCream::iceCream(game* r_pGame, point ref) :shape(r_pGame, ref)
@@ -121,11 +129,21 @@ void iceCream::resizeup()
 {
 	point cone_ref = cone->getRefPoint();
 	point cone_newRef = { (cone_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (cone_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
-	triangle_ref = cone_newRef;
-	cone->setRefPoint(cone_newRef);
 
+	cone->setRefPoint(cone_newRef);
 	cream->resizeup();
 	cone->resizeup();
+
+	if (!check_boundary())
+	{
+		cone->setRefPoint(cone_ref);
+		cream->resizedown();
+		cone->resizedown();
+
+		return;
+	}
+
+	triangle_ref = cone_newRef;
 	
 }
 
@@ -133,31 +151,52 @@ void iceCream::resizedown()
 {
 	point cone_ref = cone->getRefPoint();
 	point cone_newRef = { (cone_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (cone_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
-	triangle_ref = cone_newRef;
-	cone->setRefPoint(cone_newRef);
 
+	cone->setRefPoint(cone_newRef);
 	cream->resizedown();
 	cone->resizedown();
-	
+
+	if (!check_boundary())
+	{
+		cone->setRefPoint(cone_ref);
+		cream->resizeup();
+		cone->resizeup();
+
+		return;
+	}
+
+	triangle_ref = cone_newRef;
 }
 
 void iceCream::move(arrows direction)
 {
+	point place_holder_cone = cone->getRefPoint();
+	point place_holder_cream = cream->getRefPoint();
+
 	cream->move(direction);
 	cone->move(direction);
+
+	if (!check_boundary())
+	{
+		cone->setRefPoint(place_holder_cone);
+		cream->setRefPoint(place_holder_cream);
+		return;
+	}
+
+
 	RefPoint = cream->getRefPoint();
-
-	point cone_ref = cone->getRefPoint();
-	point cone_newRef = { (cone_ref.x - RefPoint.x) + RefPoint.x, (cone_ref.y - RefPoint.y) + RefPoint.y };
-	triangle_ref = cone_newRef;
+	triangle_ref = cone->getRefPoint();
 	circle_ref = RefPoint;
-	
-
-	
-
-
 }
 
+bool iceCream::check_boundary()
+{
+	if (cream->check_boundary() && cone->check_boundary())
+	{
+		return true;
+	}
+	return false;
+}
 
 
 
@@ -231,22 +270,34 @@ void car::rotate()
 void car::resizeup()
 {
 	point rw_ref = right_wheel->getRefPoint();
-	point rw_newRef = { (rw_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (rw_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
-	right_wheel_ref = rw_newRef;
-
-
 	point lw_ref = left_wheel->getRefPoint();
+
+
+	point rw_newRef = { (rw_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (rw_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
 	point lw_newRef = { (lw_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (lw_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
-	left_wheel_ref = lw_newRef;
+
 
 	left_wheel->setRefPoint(rw_newRef);
 	right_wheel->setRefPoint(lw_newRef);
 
-
-
 	left_wheel->resizeup();
 	right_wheel->resizeup();
 	body->resizeup();
+
+	if (!check_boundary())
+	{
+		left_wheel->resizedown();
+		right_wheel->resizedown();
+		body->resizedown();
+
+		left_wheel->setRefPoint(rw_ref);
+		right_wheel->setRefPoint(lw_ref);
+		return;
+	}
+
+	left_wheel_ref = lw_newRef;
+	right_wheel_ref = rw_newRef;
+
 }
 
 
@@ -254,21 +305,31 @@ void car::resizeup()
 void car::resizedown()
 {
 	point rw_ref = right_wheel->getRefPoint();
-	point rw_newRef = { (rw_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (rw_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
-	right_wheel_ref = rw_newRef;
-
 	point lw_ref = left_wheel->getRefPoint();
+
+	point rw_newRef = { (rw_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (rw_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
 	point lw_newRef = { (lw_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (lw_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
-	left_wheel_ref = lw_newRef;
 
 	left_wheel->setRefPoint(rw_newRef);
 	right_wheel->setRefPoint(lw_newRef);
 
-
-
 	left_wheel->resizedown();
 	right_wheel->resizedown();
 	body->resizedown();
+
+	if (!check_boundary())
+	{
+		left_wheel->resizeup();
+		right_wheel->resizeup();
+		body->resizeup();
+
+		left_wheel->setRefPoint(rw_ref);
+		right_wheel->setRefPoint(lw_ref);
+		return;
+	}
+
+	left_wheel_ref = lw_newRef;
+	right_wheel_ref = rw_newRef;
 }
 
 void car::move(arrows direction)
@@ -277,21 +338,32 @@ void car::move(arrows direction)
 	right_wheel->move(direction);
 	body->move(direction);
 
+
+	if (!check_boundary())
+	{
+		left_wheel->setRefPoint(left_wheel_ref);
+		right_wheel->setRefPoint(right_wheel_ref);
+		body->setRefPoint(RefPoint);
+		return;
+	}
+
+
 	RefPoint = body->getRefPoint();
-
-	point rw_ref = right_wheel->getRefPoint();
-	point rw_newRef = { (rw_ref.x - RefPoint.x) + RefPoint.x, (rw_ref.y - RefPoint.y) + RefPoint.y };
-	right_wheel_ref = rw_newRef;
-
-	point lw_ref = left_wheel->getRefPoint();
-	point lw_newRef = { (lw_ref.x - RefPoint.x) + RefPoint.x, (lw_ref.y - RefPoint.y) + RefPoint.y };
-	left_wheel_ref = lw_newRef;
-
 	body_ref = RefPoint;
-
+	right_wheel_ref = right_wheel->getRefPoint();
+	left_wheel_ref = left_wheel->getRefPoint();
 }
 
 
+bool car::check_boundary()
+{
+	if (body->check_boundary() && left_wheel->check_boundary()
+	&& right_wheel->check_boundary())
+	{
+		return true;
+	}
+	return false;
+}
 
 
 
@@ -390,21 +462,14 @@ void rocket::rotate()
 
 void rocket::resizeup ()
 {
-
 	point top_point = head->getRefPoint();
-	point newTopRef = { (top_point.x - RefPoint.x) * config.sizeup + RefPoint.x, (top_point.y - RefPoint.y) * config.sizeup + RefPoint.y };
-
 	point rw_ref = right_wing->getRefPoint();
-	point rw_newRef = { (rw_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (rw_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
-
-
 	point lw_ref = left_wing->getRefPoint();
+
+	point newTopRef = { (top_point.x - RefPoint.x) * config.sizeup + RefPoint.x, (top_point.y - RefPoint.y) * config.sizeup + RefPoint.y };
+	point rw_newRef = { (rw_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (rw_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
 	point lw_newRef = { (lw_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (lw_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
 
-
-	head_ref = newTopRef;
-	left_wing_ref = rw_newRef;
-	right_wing_ref = lw_newRef;
 
 	head->setRefPoint(newTopRef);
 	right_wing->setRefPoint(rw_newRef);
@@ -414,26 +479,40 @@ void rocket::resizeup ()
 	head->resizeup();
 	left_wing->resizeup();
 	right_wing->resizeup();
+	
+	if (!check_boundary())
+	{
+		body->resizedown();
+		head->resizedown();
+		left_wing->resizedown();
+		right_wing->resizedown();
+		
+		head->setRefPoint(top_point);
+		right_wing->setRefPoint(rw_ref);
+		left_wing->setRefPoint(lw_ref);
+
+		return;
+	}
+
+
+	head_ref = newTopRef;
+	left_wing_ref = rw_newRef;
+	right_wing_ref = lw_newRef;
 }
 
 void rocket::resizedown ()
 {
 	point top_point = head->getRefPoint();
-	point newTopRef = { (top_point.x - RefPoint.x) * config.sizedown + RefPoint.x, (top_point.y - RefPoint.y) * config.sizedown + RefPoint.y };
-
 	point rw_ref = right_wing->getRefPoint();
-	point rw_newRef = { (rw_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (rw_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
-
-
 	point lw_ref = left_wing->getRefPoint();
+
+	point newTopRef = { (top_point.x - RefPoint.x) * config.sizedown + RefPoint.x, (top_point.y - RefPoint.y) * config.sizedown + RefPoint.y };
+	point rw_newRef = { (rw_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (rw_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
 	point lw_newRef = { (lw_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (lw_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
 
 	head_ref = newTopRef;
 	left_wing_ref = rw_newRef;
 	right_wing_ref = lw_newRef;
-
-
-
 
 	head->setRefPoint(newTopRef);
 	right_wing->setRefPoint(rw_newRef);
@@ -443,6 +522,24 @@ void rocket::resizedown ()
 	head->resizedown();
 	left_wing->resizedown();
 	right_wing->resizedown();
+
+	if (!check_boundary())
+	{
+		body->resizeup();
+		head->resizeup();
+		left_wing->resizeup();
+		right_wing->resizeup();
+		
+		head->setRefPoint(top_point);
+		right_wing->setRefPoint(rw_ref);
+		left_wing->setRefPoint(lw_ref);
+
+		return;
+	}
+
+	head_ref = newTopRef;
+	left_wing_ref = rw_newRef;
+	right_wing_ref = lw_newRef;
 }
 
 void rocket::move(arrows direction)
@@ -452,24 +549,33 @@ void rocket::move(arrows direction)
 	left_wing->move(direction);
 	right_wing->move(direction);
 
+
+	if (!check_boundary())
+	{
+		body->setRefPoint(RefPoint);
+		head->setRefPoint(head_ref);
+		left_wing->setRefPoint(left_wing_ref);
+		right_wing->setRefPoint(right_wing_ref);
+		return;
+	}
 	RefPoint = body->getRefPoint();
 
-	point top_point = head->getRefPoint();
-	point newTopRef = { (top_point.x - RefPoint.x) + RefPoint.x, (top_point.y - RefPoint.y)  + RefPoint.y };
-
-	point rw_ref = right_wing->getRefPoint();
-	point rw_newRef = { (rw_ref.x - RefPoint.x) + RefPoint.x, (rw_ref.y - RefPoint.y) + RefPoint.y };
-
-
-	point lw_ref = left_wing->getRefPoint();
-	point lw_newRef = { (lw_ref.x - RefPoint.x) + RefPoint.x, (lw_ref.y - RefPoint.y) + RefPoint.y };
-
-	head_ref = newTopRef;
-	left_wing_ref = lw_newRef;
-	right_wing_ref = rw_newRef;
+	head_ref = head->getRefPoint();
+	left_wing_ref = left_wing->getRefPoint();
+	right_wing_ref = right_wing->getRefPoint();
 	body_ref = RefPoint;
 
 
+}
+
+bool rocket::check_boundary()
+{
+	if (body->check_boundary() && head->check_boundary()
+	&& left_wing->check_boundary() && right_wing->check_boundary())
+	{
+		return true;
+	}
+	return false;
 }
 
 
@@ -538,32 +644,43 @@ void tree::resizeup() {
 	point newTopRef = { (top_point.x - RefPoint.x) * config.sizeup + RefPoint.x, (top_point.y - RefPoint.y) * config.sizeup + RefPoint.y };
 
 
-	
-	leaf_ref = newTopRef;
-
 	leafs->setRefPoint(newTopRef);
 	log->resizeup();
 	leafs->resizeup();
+	
+	if (!check_boundary())
+	{
+		leafs->setRefPoint(top_point);
+		log->resizedown();
+		leafs->resizedown();
+		return;
+	}
 
+
+	leaf_ref = newTopRef;
 }
 
-void tree::resizedown() {
-	
-
+void tree::resizedown() 
+{
 	double topHeight = leafs->gethght();
 	double baseHeight = log->getheight();
-
 
 	point top_point = leafs->getRefPoint();
 	point newTopRef = { (top_point.x - RefPoint.x) * config.sizedown + RefPoint.x, (top_point.y - RefPoint.y) * config.sizedown + RefPoint.y };
 	
-
-	leaf_ref = newTopRef;
-
 	leafs->setRefPoint(newTopRef);
 	log->resizedown();
 	leafs->resizedown();
 
+	if (!check_boundary())
+	{
+		leafs->setRefPoint(top_point);
+		log->resizeup();
+		leafs->resizeup();
+		return;
+	}
+
+	leaf_ref = newTopRef;
 }
 
 void tree::move(arrows direction)
@@ -571,18 +688,30 @@ void tree::move(arrows direction)
 	leafs->move(direction);
 	log->move(direction);
 	
+	if (!check_boundary())
+	{
+		leafs->setRefPoint(leaf_ref);
+		log->setRefPoint(log_ref);
+		return;
+	}
+
+
+
 	RefPoint = log->getRefPoint();
-
-	point top_point = leafs->getRefPoint();
-	point newTopRef = { (top_point.x - RefPoint.x) + RefPoint.x, (top_point.y - RefPoint.y) + RefPoint.y };
-
-
-	log_ref = RefPoint;
-	leaf_ref = newTopRef;
+	log_ref = log->getRefPoint();
+	leaf_ref = leafs->getRefPoint();
 
 
 }
 
+bool tree::check_boundary()
+{
+	if (log->check_boundary() && leafs->check_boundary())
+	{
+		return true;
+	}
+	return false;
+}
 
 ////////////////////////////////////////////////////  class mosque  ///////////////////////////////////////
 
@@ -696,37 +825,17 @@ void mosque::rotate()
 
 void mosque::resizeup() {
 	point rt_ref = right_tower->getRefPoint();
-	point rt_newRef = { (rt_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (rt_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
-
-
 	point lt_ref = left_tower->getRefPoint();
-	point lt_newRef = { (lt_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (lt_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
-
 	point rth_ref = right_th->getRefPoint();
-	point rth_newRef = { (rth_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (rth_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
-
 	point lth_ref = left_th->getRefPoint();
-	point lth_newRef = { (lth_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (lth_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
-
 	point oba_ref = oba->getRefPoint();
+
+
+	point rt_newRef = { (rt_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (rt_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
+	point lt_newRef = { (lt_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (lt_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
+	point rth_newRef = { (rth_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (rth_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
+	point lth_newRef = { (lth_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (lth_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
 	point oba_newRef = { (oba_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (oba_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
-
-	left_tower->setRefPoint(lt_newRef);
-	right_tower->setRefPoint(rt_newRef);
-
-	left_th->setRefPoint(lth_newRef);
-	right_th->setRefPoint(rth_newRef);
-
-	oba->setRefPoint(oba_newRef);
-
-
-
-
-	left_tower_ref = lt_newRef;
-	right_tower_ref = rt_newRef;
-	left_th_ref = lth_newRef;
-	right_th_ref = rth_newRef;
-	oba_ref = oba_newRef;
 
 	oba->resizeup();
 	base->resizeup();
@@ -734,6 +843,37 @@ void mosque::resizeup() {
 	right_tower->resizeup();
 	left_th->resizeup();
 	right_th->resizeup();
+
+	left_tower->setRefPoint(lt_newRef);
+	right_tower->setRefPoint(rt_newRef);
+	left_th->setRefPoint(lth_newRef);
+	right_th->setRefPoint(rth_newRef);
+	oba->setRefPoint(oba_newRef);
+
+	if (!check_boundary())
+	{
+		oba->resizedown();
+		base->resizedown();
+		left_tower->resizedown();
+		right_tower->resizedown();
+		left_th->resizedown();
+		right_th->resizedown();
+	
+		left_tower->setRefPoint(lt_ref);
+		right_tower->setRefPoint(rt_ref);
+		left_th->setRefPoint(lth_ref);
+		right_th->setRefPoint(rth_ref);
+		oba->setRefPoint(oba_ref);
+
+		return;
+	}
+
+	left_tower_ref = lt_newRef;
+	right_tower_ref = rt_newRef;
+	left_th_ref = lth_newRef;
+	right_th_ref = rth_newRef;
+	oba_ref = oba_newRef;
+
 }
 
 
@@ -791,34 +931,38 @@ void mosque::move(arrows direction)
 	right_th->move(direction);
 
 
+	if(!check_boundary())
+	{
+		oba->setRefPoint(oba_ref);
+		base->setRefPoint(base_ref);
+		left_tower->setRefPoint(left_tower_ref);
+		right_tower->setRefPoint(right_tower_ref);
+		left_th->setRefPoint(left_th_ref);
+		right_th->setRefPoint(right_th_ref);
+
+		return;
+	}
 
 
-	point rt_ref = right_tower->getRefPoint();
-	point rt_newRef = { (rt_ref.x - RefPoint.x) + RefPoint.x, (rt_ref.y - RefPoint.y) + RefPoint.y };
-
-
-	point lt_ref = left_tower->getRefPoint();
-	point lt_newRef = { (lt_ref.x - RefPoint.x) + RefPoint.x, (lt_ref.y - RefPoint.y) + RefPoint.y };
-
-	point rth_ref = right_th->getRefPoint();
-	point rth_newRef = { (rth_ref.x - RefPoint.x) + RefPoint.x, (rth_ref.y - RefPoint.y) + RefPoint.y };
-
-	point lth_ref = left_th->getRefPoint();
-	point lth_newRef = { (lth_ref.x - RefPoint.x) + RefPoint.x, (lth_ref.y - RefPoint.y) + RefPoint.y };
-
-	point oba_ref = oba->getRefPoint();
-	point oba_newRef = { (oba_ref.x - RefPoint.x) + RefPoint.x, (oba_ref.y - RefPoint.y) + RefPoint.y };
-
-
-	
 	RefPoint = base->getRefPoint();
 
-	left_tower_ref = lt_newRef;
-	right_tower_ref = rt_newRef;
-	left_th_ref = lth_newRef;
-	right_th_ref = rth_newRef;
-	oba_ref = oba_newRef;
+	left_tower_ref = left_tower->getRefPoint();
+	right_tower_ref = right_tower->getRefPoint();
+	left_th_ref = left_th->getRefPoint();
+	right_th_ref = right_th->getRefPoint();
+	oba_ref = oba->getRefPoint();
 	base_ref = RefPoint;
+}
+
+bool mosque::check_boundary()
+{
+	if (oba->check_boundary() && base->check_boundary() &&
+		left_tower->check_boundary() && right_tower->check_boundary() &&
+		left_th->check_boundary() && right_th->check_boundary())
+	{
+		return true;
+	}
+	return false;
 }
 
 
@@ -847,7 +991,6 @@ dumbbell::dumbbell(game* r_pGame, point ref) : shape(r_pGame, ref) {
 }
 dumbbell::~dumbbell()
 {
-	cout << "dumbbell destructor called" << endl;
 	delete handle;
 	delete left_w;
 	delete right_w;
@@ -893,9 +1036,6 @@ void dumbbell::resizeup()
 	point rightw_ref = right_w->getRefPoint();
 	point rightw_newRef = { (rightw_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (rightw_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
 
-	left_w_ref = leftw_newRef;
-	right_w_ref = rightw_newRef;
-
 	left_w->setRefPoint(leftw_newRef);
 	right_w->setRefPoint(rightw_newRef);
 
@@ -903,19 +1043,29 @@ void dumbbell::resizeup()
 	left_w->resizeup();
 	right_w->resizeup();
 
+	if (!check_boundary())
+	{
+		left_w->setRefPoint(leftw_ref);
+		right_w->setRefPoint(rightw_ref);
+
+		handle->resizedown();
+		left_w->resizedown();
+		right_w->resizedown();
+		return;
+	}
+
+
+	left_w_ref = leftw_newRef;
+	right_w_ref = rightw_newRef;
 }
 
 void dumbbell::resizedown() 
 {
 	point leftw_ref = left_w->getRefPoint();
-	point leftw_newRef = { (leftw_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (leftw_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
-
 	point rightw_ref = right_w->getRefPoint();
+
+	point leftw_newRef = { (leftw_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (leftw_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
 	point rightw_newRef = { (rightw_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (rightw_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
-
-	left_w_ref = leftw_newRef;
-	right_w_ref = rightw_newRef;
-
 
 	left_w->setRefPoint(leftw_newRef);
 	right_w->setRefPoint(rightw_newRef);
@@ -923,6 +1073,20 @@ void dumbbell::resizedown()
 	handle->resizedown();
 	left_w->resizedown();
 	right_w->resizedown();
+
+	if (!check_boundary())
+	{
+		left_w->setRefPoint(leftw_ref);
+		right_w->setRefPoint(rightw_ref);
+
+		handle->resizeup();
+		left_w->resizeup();
+		right_w->resizeup();
+		return;
+	}
+
+	left_w_ref = leftw_newRef;
+	right_w_ref = rightw_newRef;
 }
 
 void dumbbell::move(arrows direction)
@@ -931,19 +1095,29 @@ void dumbbell::move(arrows direction)
 	left_w->move(direction);
 	right_w->move(direction);
 
+	if (!check_boundary())
+	{
+		handle->setRefPoint(handle_ref);
+		left_w->setRefPoint(left_w_ref);
+		right_w->setRefPoint(right_w_ref);
+		return;
+	}
+
 	RefPoint = handle->getRefPoint();
-
-	point leftw_ref = left_w->getRefPoint();
-	point leftw_newRef = { (leftw_ref.x - RefPoint.x) + RefPoint.x, (leftw_ref.y - RefPoint.y) + RefPoint.y };
-
-	point rightw_ref = right_w->getRefPoint();
-	point rightw_newRef = { (rightw_ref.x - RefPoint.x) + RefPoint.x, (rightw_ref.y - RefPoint.y) + RefPoint.y };
-
-	left_w_ref = leftw_newRef;
-	right_w_ref = rightw_newRef;
+	left_w_ref = left_w->getRefPoint();
+	right_w_ref = right_w->getRefPoint();
 	handle_ref = RefPoint;
 
 
+}
+
+bool dumbbell::check_boundary()
+{
+	if (left_w->check_boundary() && right_w->check_boundary() && handle->check_boundary())
+	{
+		return true;
+	}
+	return false;
 }
 
 

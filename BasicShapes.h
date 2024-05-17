@@ -26,8 +26,7 @@ public:
 	virtual void resizeup() override;
 	virtual void resizedown() override;
 	virtual void move(arrows direction) override;
-	point getRefPoint()const;
-
+	virtual bool check_boundary() override;
 
 	int getheight() const
 	{
@@ -58,19 +57,13 @@ public:
 	virtual void resizeup() override;
 	virtual void resizedown() override;
 	virtual void move(arrows direction) override;
+	virtual bool check_boundary() override;
 
 
 	 int getradius() const
 	{
 		return rad;
 	}
-
-
-
-
-
-	point getRefPoint()const;
-
 
 };
 
@@ -91,8 +84,9 @@ public:
 	virtual void resizeup() override;
 	virtual void resizedown() override;
 	virtual void move(arrows direction) override;
-	point getRefPoint()const;
+	virtual bool check_boundary() override;
 	double get_curAngle() const;
+	virtual void setRefPoint(point p) override;
 
 
 	int getbase() const
