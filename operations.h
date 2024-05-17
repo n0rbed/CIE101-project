@@ -63,7 +63,7 @@ class operAddSign:public operation
 {
 public:
 	operAddSign(game* r_pGame);
-	virtual void Act();
+	void Act()override;
 };
 
 
@@ -73,7 +73,7 @@ class operAddCar :public operation
 {
 public:
 	operAddCar(game* r_pGame);
-	virtual void Act();
+	void Act()override;
 };
 
 
@@ -84,7 +84,7 @@ class operAddIceCream :public operation
 {
 public:
 	operAddIceCream(game* r_pGame);
-	virtual void Act();
+	void Act()override;
 };
 
 
@@ -95,7 +95,7 @@ class operAddRocket :public operation
 {
 public:
 	operAddRocket(game* r_pGame);
-	virtual void Act();
+	void Act()override;
 };
 
 
@@ -106,7 +106,7 @@ class operAddTree:public operation
 {
 public:
 	operAddTree(game* r_pGame);
-	virtual void Act();
+	void Act()override;
 };
 
 
@@ -116,7 +116,7 @@ class operAddMosque :public operation
 {
 public:
 	operAddMosque(game* r_pGame);
-	virtual void Act();
+	void Act()override;
 };
 
 
@@ -126,5 +126,21 @@ class operAddDumbell :public operation
 {
 public:
 	operAddDumbell(game* r_pGame);
-	virtual void Act();
+	void Act()override;
+};
+
+
+class operDeleteActiveShape :public operation
+{
+public:
+	operDeleteActiveShape(game* r_pGame);
+	void Act()override;
+};
+
+
+class operSelectLevel :public operation
+{
+public:
+	operSelectLevel(game* r_pGame);
+	void Act()override;
 };

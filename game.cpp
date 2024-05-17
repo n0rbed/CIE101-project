@@ -75,7 +75,10 @@ operation* game::createRequiredOperation(int clickedItem)
 {
 
 	string items[14] = { "ITM_ICECREAM", "ITM_CAR", "ITM_ROCKET","ITM_TREE", "ITM_MOSQUE","ITM_DUMBBELL", "ITM_INCREASE", "ITM_DECREASE", "ITM_ROTATE", "ITM_REFRESH", "ITM_HINT", "ITM_DELETE", "ITM_SELECTLEVEL", "ITM_SAVE" };
-	if (clickedItem <= 13) {
+	if (clickedItem == 12) {
+		selectLevelBar(" ");
+	}
+	else if (clickedItem <= 13) {
 		printMessage(items[clickedItem]);
 	}
 	else
@@ -112,10 +115,10 @@ operation* game::createRequiredOperation(int clickedItem)
 		op = new operAddDumbell(this);
 		break;
 	case ITM_DELETE:
-		shapesGrid->deleteActiveShape();
+		op = new operDeleteActiveShape(this);
 		break;
-	case ITM_REFRESH:
-		shapesGrid->matchingDetection();
+	case ITM_SELECTLEVEL:
+		op = new operSelectLevel(this);
 		break;
 	case (ARROW_DOWN+ITM_CNT):
 		 op = new operMove(this, ARROW_DOWN);
@@ -156,6 +159,15 @@ void game::printMessage(string msg) const	//Prints a message on status bar
 
 
 
+void game::selectLevelBar(string msg) const	//Prints a message on status bar
+{
+	clearStatusBar();
+	pWind->SetPen(config.penColor, 50);
+	pWind->SetFont(24, BOLD, BY_NAME, "Arial");
+	pWind->DrawString(10, config.windHeight - (int)(0.85 * config.statusBarHeight), "Enter game level: " + msg);
+}
+
+
 window* game::getWind() const		//returns a pointer to the graphics window
 {
 	return pWind;
@@ -183,7 +195,7 @@ string game::getSrting() const
 				Key = '\0';
 		else
 			Label += Key;
-		printMessage(Label);
+		selectLevelBar(Label);
 	}
 }
 
@@ -228,6 +240,7 @@ void game::setLevel(int l)
 {
 	level = l;
 	createPlayerInformation();
+	
 }
 
 

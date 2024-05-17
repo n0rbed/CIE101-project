@@ -27,6 +27,7 @@ public:
 	bool addShape(shape* newShape);
 	void setActiveShape(shape* actShape);
 	void generate_level(int level_n);
+	bool nextLevel();
 	void matchingDetection();
 	bool refPoints_checker(int* list, int* list2, int name);
 	shape* grid::getactiveshape() const;

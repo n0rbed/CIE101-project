@@ -235,7 +235,6 @@ bool grid::refPoints_checker(int* list, int* list2, int name)
 		for (int i = 0; i < 4; i++) {
 			if (list[i] && list2[i]) {
 				if (list[i] != list2[i]) {
-					cout << "      diff is     " << i << "           " << list[i] << "          not       " << list2[i] << "              ";
 					return false;
 				}
 			}
@@ -247,11 +246,20 @@ bool grid::refPoints_checker(int* list, int* list2, int name)
 		for (int i = 0; i < 6; i++) {
 			if (list[i] && list2[i]) {
 				if (list[i] != list2[i]) {
-					cout<<"      diff is     "<< i <<"           " << list[i] << "          not       " << list2[i] << "              ";
 					return false;
 				}
 			}
 		}
+	return true;
+}
+
+
+bool grid::nextLevel() {
+	for (int i = 0; i < MaxShapeCount; i++) {
+		if (shapeList[i] != nullptr) {
+			return false;
+		}
+	}
 	return true;
 }
 
@@ -270,12 +278,15 @@ void grid::matchingDetection()
 					shapeList[i] = nullptr;
 					deleteActiveShape();
 					pGame->setScore(pGame->getScore()+3);
+					if (nextLevel()) {
+						pGame->setLevel(pGame->getLevel() + 1);
+					}
 				}
 			}
 		}
 
 	}
-	
-	pGame->setScore(pGame->getScore() -1);
-	
+	if (pGame->getScore() > 0) {
+		pGame->setScore(pGame->getScore() - 1);
+	}
 }
