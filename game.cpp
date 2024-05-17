@@ -309,6 +309,13 @@ void game::run()
 			shapesGrid->draw();
 		}
 
-		// generate random shapes 
 	} while (clickedItem!=ITM_EXIT);
+
+	delete gameToolbar;
+	delete pWind;
+	delete shapesGrid;
+
+	gameToolbar = nullptr;
+	pWind = nullptr;
+	shapesGrid = nullptr;
 }
