@@ -48,6 +48,38 @@ toolbar::toolbar(game* pG)
 }
 
 
+void toolbar::reCreateToolBar() {
+	window* pWind = pGame->getWind();
+	toolbarItemImages[ITM_ICECREAM] = "images\\toolbarItems\\ice_cream.jpg";
+	toolbarItemImages[ITM_CAR] = "images\\toolbarItems\\car.jpg";
+	toolbarItemImages[ITM_ROCKET] = "images\\toolbarItems\\rocket.jpg";
+	toolbarItemImages[ITM_TREE] = "images\\toolbarItems\\tree.jpg";
+	toolbarItemImages[ITM_MOSQUE] = "images\\toolbarItems\\mosque.jpg";
+	toolbarItemImages[ITM_DUMBBELL] = "images\\toolbarItems\\dumbbell.jpg";
+	toolbarItemImages[ITM_INCREASE] = "images\\toolbarItems\\increase.jpg";
+	toolbarItemImages[ITM_DECREASE] = "images\\toolbarItems\\decrease.jpg";
+	toolbarItemImages[ITM_ROTATE] = "images\\toolbarItems\\rotate.jpg";
+	toolbarItemImages[ITM_REFRESH] = "images\\toolbarItems\\refresh.jpg";
+	toolbarItemImages[ITM_HINT] = "images\\toolbarItems\\hint.jpg";
+	toolbarItemImages[ITM_DELETE] = "images\\toolbarItems\\delete.jpg";
+	toolbarItemImages[ITM_SELECTLEVEL] = "images\\toolbarItems\\select_level.jpg";
+	toolbarItemImages[ITM_SAVE] = "images\\toolbarItems\\save.jpg";
+	toolbarItemImages[ITM_EXIT] = "images\\toolbarItems\\toolbar_Exit.jpg";
+
+	//TODO: Prepare image for each toolbar item and add it to the list
+
+	//Draw toolbar item one image at a time
+	for (int i = 0; i < ITM_CNT; i++)
+		pWind->DrawImage(toolbarItemImages[i], i * config.toolbarItemWidth, 0, config.toolbarItemWidth, height);
+
+	//Draw a line under the toolbar
+	pWind->SetPen(DARKBLUE, 3);
+	pWind->DrawLine(0, height, width, height);
+	playerInformation();
+
+}
+
+
 
 void toolbar::playerInformation() {
 

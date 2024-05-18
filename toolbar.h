@@ -13,6 +13,7 @@ private:
 public:
 	toolbar(game* r_pGame);
 	void playerInformation();
+	void reCreateToolBar();
 	toolbarItem getItemClicked(int x);	//handles clicks on toolbar icons, returns the "enum" of the clicekd item
 };
 

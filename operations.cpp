@@ -354,7 +354,6 @@ void operSelectLevel::Act()
 	int new_level = stoi(s);
 
 	pGame->setLevel(new_level);
-	gridP->generate_level(new_level);
 }
 
 

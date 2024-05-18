@@ -11,9 +11,6 @@ game::game()
 	//Create the main window
 	createWind(config.windWidth, config.windHeight, config.wx, config.wy);
 
-	//Create and draw the toolbar
-	createToolBar();
-
 	//Create and draw the grid
 	createGrid();
 	// randomize shapes here
@@ -22,6 +19,9 @@ game::game()
 
 	//Create and clear the status bar
 	clearStatusBar();
+	//Create and draw the toolbar
+	createToolBar();
+
 }
 
 game::~game()
@@ -239,8 +239,9 @@ void game::setLives(int l)
 void game::setLevel(int l)
 {
 	level = l;
-	createPlayerInformation();
-	
+	shapesGrid->generate_level(l);
+	gameToolbar->reCreateToolBar();
+	clearStatusBar();
 }
 
 
