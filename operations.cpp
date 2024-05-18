@@ -347,10 +347,14 @@ operSelectLevel::operSelectLevel(game* r_pGame): operation(r_pGame)
 void operSelectLevel::Act()
 {
 	string s = pGame->getSrting();
+	grid* gridP = pGame->getGrid();
+	gridP->del_list();
+
 	pGame->clearStatusBar();
 	int new_level = stoi(s);
-	pGame->setLevel(new_level);
 
+	pGame->setLevel(new_level);
+	gridP->generate_level(new_level);
 }
 
 

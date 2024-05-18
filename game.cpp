@@ -159,7 +159,7 @@ void game::printMessage(string msg) const	//Prints a message on status bar
 
 
 
-void game::selectLevelBar(string msg) const	//Prints a message on status bar
+void game::selectLevelBar(string msg) const	
 {
 	clearStatusBar();
 	pWind->SetPen(config.penColor, 50);
@@ -313,6 +313,8 @@ void game::run()
 
 	delete gameToolbar;
 	delete pWind;
+	shapesGrid->del_list();
+	shapesGrid->deleteActiveShape();
 	delete shapesGrid;
 
 	gameToolbar = nullptr;

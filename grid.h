@@ -28,6 +28,7 @@ public:
 
 	bool addShape(shape* newShape);
 	void generate_level(int level_n);
+	void del_list();
 
 	// bounds
 	point get_uprLeft() const;

@@ -42,7 +42,6 @@ void grid::draw() const
 	for (int r = 1; r < rows; r++)
 		for (int c = 0; c < cols; c++)
 			pWind->DrawCircle(c * config.gridSpacing, r * config.gridSpacing + uprLeft.y, 1);
-			//pWind->DrawPixel(c * config.gridSpacing, r * config.gridSpacing + uprLeft.y);
 
 	//Draw ALL shapes
 	color colors[3] = { RED, BLUE, BLACK };
@@ -185,6 +184,18 @@ void grid::generate_level(int level_n)
 			new_shape = nullptr;
 			i--;
 		}
+	}
+}
+
+void grid::del_list()
+{
+	for (int i = 0; i < shapeCount; i++)
+	{
+		if (shapeList[i])
+		{
+			delete shapeList[i];
+		}
+		shapeList[i] = nullptr;
 	}
 }
 
