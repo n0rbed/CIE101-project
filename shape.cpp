@@ -2,6 +2,7 @@
 #include "game.h"
 #include "gameConfig.h"
 #include <iostream>;
+#include <fstream>
 using namespace std;
 
 shape::shape(game* r_pGame, point ref)
@@ -49,10 +50,35 @@ int* shape::get_ref_list() const
 	return ref_list[0];
 }
 
+void shape::save(ofstream& OutF)
+{
+
+	OutF << name << "\t" << RefPoint.x << "\t" << RefPoint.y << "\t"  << rotationCount << "\t" << sizeCount  << endl;
+
+}
+
+
 void shape::update_color()
 {
 	fillColor = config.fillColor;
 	borderColor = config.penColor;
+}
+
+
+
+void shape::rotate()
+{
+	rotationCount++;
+}
+
+void shape::resizeup()
+{
+	sizeCount++;
+}
+
+void shape::resizedown()
+{
+	sizeCount--;
 }
 
 

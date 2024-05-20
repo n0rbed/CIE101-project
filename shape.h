@@ -33,7 +33,8 @@ protected:
 	color fillColor;	//shape fill color
 	color borderColor;	//shape border color
 	int name;
-	
+	int rotationCount=0;
+	int sizeCount=0;
 	int* ref_list[6];
 public:
 	
@@ -56,9 +57,7 @@ public:
 	int get_name() const;
 	int* get_ref_list() const;
 	virtual void move(arrows direction) = 0;		//Move the shape
-	//virtual void save(ofstream &OutFile) = 0;	//Save the shape parameters to the file
-	//virtual void load(ifstream &Infile) = 0;	//Load the shape parameters to the file
-
+	 void save(ofstream &OutFile) ;	//Save the shape parameters to the file
 };
 
 

@@ -17,6 +17,36 @@ public:
 	virtual void Act() = 0;
 };
 
+
+class operHint : public operation
+{
+public:
+	operHint(game* r_pGame);
+	virtual void Act() override;
+};
+
+class operSave :public operation
+{
+public:
+	operSave(game* r_pGame);
+	virtual void Act() override;
+
+
+};
+
+
+class operLoad :public operation
+{
+public:
+	operLoad(game* r_pGame);
+	virtual void Act() override;
+
+
+};
+
+
+
+
 class operrotate :public operation
 {
 public:
@@ -25,12 +55,7 @@ public:
 	
 };
 
-class operHint : public operation
-{
-public:
-	operHint(game* r_pGame);
-	virtual void Act() override;
-};
+
 
 
 class operResizeUp :public operation
@@ -53,7 +78,7 @@ class operMove :public operation
 	arrows direction;
 public:
 operMove(game* r_pGame, arrows direction);
-virtual void Act();
+virtual void Act() override;
 };
 
 
@@ -121,7 +146,7 @@ class operAddMosque :public operation
 {
 public:
 	operAddMosque(game* r_pGame);
-	void Act()override;
+	void Act() override;
 };
 
 
@@ -131,7 +156,7 @@ class operAddDumbell :public operation
 {
 public:
 	operAddDumbell(game* r_pGame);
-	void Act()override;
+	void Act() override;
 };
 
 
@@ -139,7 +164,7 @@ class operDeleteActiveShape :public operation
 {
 public:
 	operDeleteActiveShape(game* r_pGame);
-	void Act()override;
+	void Act() override;
 };
 
 
@@ -147,5 +172,5 @@ class operSelectLevel :public operation
 {
 public:
 	operSelectLevel(game* r_pGame);
-	void Act()override;
+	void Act() override;
 };

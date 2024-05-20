@@ -44,6 +44,7 @@ public:
 	void setScore(int s);
 	void setLives(int l);
 	void setLevel(int l);
+	void load();
 
 	
 

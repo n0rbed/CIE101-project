@@ -29,7 +29,7 @@ public:
 	bool addShape(shape* newShape);
 	void generate_level(int level_n);
 	void del_list();
-	shape** get_list(); 
+	shape** get_list();
 	int get_count() const;
 
 	// bounds
@@ -41,5 +41,9 @@ public:
 	void matchingDetection();
 	bool refPoints_checker(int* list, int* list2, int name);
 	shape* grid::getactiveshape() const;
+	int getShapeCount();
+	void saveshapes(ofstream& OutFile);
+	void clear();
+
 };
 

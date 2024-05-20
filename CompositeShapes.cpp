@@ -10,6 +10,7 @@ Sign::Sign(game* r_pGame, point ref):shape(r_pGame, ref)
 	point baseRef = { ref.x, ref.y + config.sighShape.topHeight / 2 + config.sighShape.baseHeight / 2 };
 	top = new Rect(pGame, topRef, config.sighShape.topHeight, config.sighShape.topWdth);
 	base = new Rect(pGame, baseRef, config.sighShape.baseHeight, config.sighShape.baseWdth);
+	
 }
 
 Sign::~Sign()
@@ -108,6 +109,8 @@ void iceCream::draw() const
 
 void iceCream::rotate() 
 {
+	rotationCount++;
+
 	double cos90 = 0;
 	double sin90 = 1;
 
@@ -127,6 +130,8 @@ void iceCream::rotate()
 
 void iceCream::resizeup()
 {
+	sizeCount++;
+
 	point cone_ref = cone->getRefPoint();
 	point cone_newRef = { (cone_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (cone_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
 
@@ -149,6 +154,8 @@ void iceCream::resizeup()
 
 void iceCream::resizedown()
 {
+	sizeCount--;
+
 	point cone_ref = cone->getRefPoint();
 	point cone_newRef = { (cone_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (cone_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
 
@@ -201,8 +208,9 @@ bool iceCream::check_boundary()
 
 
 ////////////////////////////////////////////////////  class car  ///////////////////////////////////////
-car::car(game* r_pGame, point ref) : shape(r_pGame, ref) 
+car::car(game* r_pGame, point ref) : shape(r_pGame, ref)
 {
+
 	body_ref = ref;
 
 	left_wheel_ref = { ref.x - (config.carShape.body_width/2) + config.carShape.wheel_radius,
@@ -241,6 +249,7 @@ void car::draw() const
 
 void car::rotate()
 {
+	rotationCount++;
 
 	double cos90 = 0;
 	double sin90 = 1;
@@ -269,6 +278,8 @@ void car::rotate()
 
 void car::resizeup()
 {
+	sizeCount++;
+
 	point rw_ref = right_wheel->getRefPoint();
 	point lw_ref = left_wheel->getRefPoint();
 
@@ -304,6 +315,8 @@ void car::resizeup()
 
 void car::resizedown()
 {
+	sizeCount--;
+
 	point rw_ref = right_wheel->getRefPoint();
 	point lw_ref = left_wheel->getRefPoint();
 
@@ -423,6 +436,8 @@ void rocket::draw() const
 
 void rocket::rotate() 
 {
+	rotationCount++;
+
 
 
 	double cos90 = 0;
@@ -462,6 +477,8 @@ void rocket::rotate()
 
 void rocket::resizeup ()
 {
+	sizeCount++;
+
 	point top_point = head->getRefPoint();
 	point rw_ref = right_wing->getRefPoint();
 	point lw_ref = left_wing->getRefPoint();
@@ -502,6 +519,8 @@ void rocket::resizeup ()
 
 void rocket::resizedown ()
 {
+	sizeCount--;
+
 	point top_point = head->getRefPoint();
 	point rw_ref = right_wing->getRefPoint();
 	point lw_ref = left_wing->getRefPoint();
@@ -615,6 +634,7 @@ void tree::draw() const {
 
 
 void tree::rotate() {
+	rotationCount++;
 
 	double cos90 = 0;
 	double sin90 = 1;
@@ -636,7 +656,8 @@ void tree::rotate() {
 
 
 void tree::resizeup() {
-	
+	sizeCount++;
+
 	double topHeight = leafs->gethght();
 	double baseHeight = log->getheight();
 
@@ -662,6 +683,8 @@ void tree::resizeup() {
 
 void tree::resizedown() 
 {
+	sizeCount--;
+
 	double topHeight = leafs->gethght();
 	double baseHeight = log->getheight();
 
@@ -776,6 +799,8 @@ void mosque::draw() const
 
 void mosque::rotate() 
 {
+	rotationCount++;
+
 	double cos90 = 0;
 	double sin90 = 1;
 
@@ -824,6 +849,8 @@ void mosque::rotate()
 }
 
 void mosque::resizeup() {
+	sizeCount++;
+
 	point rt_ref = right_tower->getRefPoint();
 	point lt_ref = left_tower->getRefPoint();
 	point rth_ref = right_th->getRefPoint();
@@ -881,6 +908,8 @@ void mosque::resizeup() {
 
 void mosque::resizedown() 
 {
+	sizeCount--;
+
 	point rt_ref = right_tower->getRefPoint();
 	point rt_newRef = { (rt_ref.x - RefPoint.x) * config.sizedown + RefPoint.x, (rt_ref.y - RefPoint.y) * config.sizedown + RefPoint.y };
 
@@ -1004,6 +1033,8 @@ void dumbbell::draw() const
 }
 void dumbbell::rotate() 
 {
+	rotationCount++;
+
 
 	double cos90 = 0;
 	double sin90 = 1;
@@ -1030,6 +1061,8 @@ void dumbbell::rotate()
 
 void dumbbell::resizeup() 
 {
+	sizeCount++;
+
 	point leftw_ref = left_w->getRefPoint();
 	point leftw_newRef = { (leftw_ref.x - RefPoint.x) * config.sizeup + RefPoint.x, (leftw_ref.y - RefPoint.y) * config.sizeup + RefPoint.y };
 
@@ -1061,6 +1094,8 @@ void dumbbell::resizeup()
 
 void dumbbell::resizedown() 
 {
+	sizeCount--;
+
 	point leftw_ref = left_w->getRefPoint();
 	point rightw_ref = right_w->getRefPoint();
 

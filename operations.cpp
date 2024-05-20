@@ -2,6 +2,8 @@
 #include "game.h"
 #include "CompositeShapes.h"
 #include <iostream>
+#include<fstream>
+#include<vector>
 #include <windows.h>
 
 using namespace std;
@@ -9,6 +11,77 @@ using namespace std;
 operation::operation(game* r_pGame)
 {
 	pGame = r_pGame;
+}
+
+
+
+operSave::operSave(game* r_pGame) : operation(r_pGame)
+{
+}
+
+void operSave::Act()
+{
+	ofstream Progress("GameProgress.txt");
+	FILE* progress = fopen("GameProgress", "w");
+
+	int lives = pGame->getLives();
+	int score = pGame->getScore();
+	int level = pGame->getLevel();
+
+	Progress << lives << endl;
+	Progress << score << endl;
+	Progress << level << endl;
+
+	pGame->getGrid()->saveshapes(Progress);
+
+	Progress.close();
+}
+
+operLoad::operLoad(game* r_pGame) : operation(r_pGame)
+{
+}
+
+void operLoad::Act()
+{
+	pGame->load();
+
+}
+
+
+
+
+
+operHint::operHint(game* r_pGame) : operation(r_pGame)
+{
+}
+void operHint::Act()
+{
+	if (pGame->getLevel() < 3) return;
+	if (pGame->getScore() <= 0) return;
+
+	grid* gridP = pGame->getGrid();
+	shape** list = gridP->get_list();
+	int cur_count = gridP->get_count();
+	for (int i = 0; i < cur_count; i++)
+	{
+		if (list[i])
+		{
+			config.fillColor = RED;
+			config.penColor = RED;
+			list[i]->update_color();
+			list[i]->draw();
+
+			Sleep(2000);
+
+			config.fillColor = BLACK;
+			config.penColor = BLACK;
+			list[i]->update_color();
+			list[i]->draw();
+
+			break;
+		}
+	}
+	pGame->setScore(pGame->getScore() - 1);
 }
 
 
@@ -358,34 +431,3 @@ void operSelectLevel::Act()
 	pGame->setLevel(new_level);
 }
 
-operHint::operHint(game* r_pGame) : operation(r_pGame)
-{
-}
-void operHint::Act()
-{
-	if (pGame->getLevel() < 3) return;
-
-	grid* gridP = pGame->getGrid();
-	shape** list = gridP->get_list();
-	int cur_count = gridP->get_count();
-	bool hint_done = false;
-	for (int i = 0; i < cur_count; i++)
-	{
-		if (list[i])
-		{
-			config.fillColor = RED;
-			config.penColor = RED;
-			list[i]->update_color();
-			list[i]->draw();
-
-			Sleep(2000);
-
-			config.fillColor = BLACK;
-			config.penColor = BLACK;
-			list[i]->update_color();
-			list[i]->draw();
-
-			break;
-		}
-	}
-}

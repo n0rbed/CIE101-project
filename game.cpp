@@ -1,6 +1,7 @@
 #include "game.h"
 #include "gameConfig.h"
 #include <iostream>
+#include<fstream>
 using namespace std;
 
 
@@ -117,8 +118,17 @@ operation* game::createRequiredOperation(int clickedItem)
 	case ITM_DELETE:
 		op = new operDeleteActiveShape(this);
 		break;
+	case ITM_SAVE:
+		op = new operSave(this);
+		break;
+	case ITM_REFRESH:
+		op = new operLoad(this);
+		break;
 	case ITM_SELECTLEVEL:
 		op = new operSelectLevel(this);
+		break;
+	case ITM_HINT:
+		op = new operHint(this);
 		break;
 	case (ARROW_DOWN+ITM_CNT):
 		 op = new operMove(this, ARROW_DOWN);
@@ -134,9 +144,6 @@ operation* game::createRequiredOperation(int clickedItem)
 		break;
 	case SPACE+ITM_CNT:
 		shapesGrid->matchingDetection();
-		break;
-	case ITM_HINT:
-		op = new operHint(this);
 		break;
 	}
 	return op;
@@ -229,7 +236,10 @@ int game::getLevel() const
 
 void game::setScore(int s) 
 {
-	score = s;
+	if (s >= 0)
+	{
+		score = s;
+	}
 	createPlayerInformation();
 }
 
@@ -248,6 +258,72 @@ void game::setLevel(int l)
 }
 
 
+void game::load()
+{
+	shapesGrid->clear();
+	shapesGrid->clearGridArea();
+	ifstream Progress;
+	Progress.open("GameProgress.txt");
+	Progress >> lives;
+	Progress >> score;
+	Progress >> level;
+	int name, refx, refy, rotationCount, sizeCount;
+	shape* psh = nullptr;
+	while (!Progress.eof()) {
+		Progress >> name >> refx >> refy>> rotationCount>> sizeCount;
+		point newref = { refx,refy };
+
+
+	switch (name)
+	{
+		case 1:
+			psh = new iceCream(this, newref);
+			break;
+		case 2:
+			psh = new car(this, newref);
+			break;
+
+		case 3:
+			psh = new rocket(this, newref);
+			break;
+
+		case 4:
+			psh = new tree(this, newref);
+			break;
+
+		case 5:
+			psh = new mosque(this, newref);
+			break;
+
+		case 6:
+			psh = new dumbbell(this, newref);
+			break;
+	}
+
+	for (int i = 0; i < rotationCount; i++)
+	{
+		psh->rotate();
+	}
+
+
+
+	if (sizeCount > 0) {
+		for (int i = 0; i < sizeCount; i++)
+		{
+			psh->resizeup();
+		}
+	}
+	else if (sizeCount < 0)
+	{
+		for (int i = 0; i > sizeCount; i--)
+		{
+			psh->resizedown();
+		}
+	}shapesGrid->addShape(psh);
+	}
+
+	shapesGrid->draw();
+}
 
 
 
@@ -318,8 +394,8 @@ void game::run()
 	delete gameToolbar;
 	shapesGrid->del_list();
 	shapesGrid->deleteActiveShape();
-	delete pWind;
 	delete shapesGrid;
+	delete pWind;
 
 	gameToolbar = nullptr;
 	pWind = nullptr;

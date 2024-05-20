@@ -30,6 +30,19 @@ grid::~grid()
 }
 
 
+
+int grid::getShapeCount()
+{
+	return shapeCount;
+}
+
+void grid::clear()
+{
+	for (int i = 0; i < shapeCount; i++)
+		delete shapeList[i];
+	shapeCount = 0;
+}
+
 void grid::draw() const
 {
 	clearGridArea();
@@ -310,5 +323,18 @@ void grid::matchingDetection()
 	}
 	if (pGame->getScore() > 0) {
 		pGame->setScore(pGame->getScore() - 1);
+	}
+}
+
+void grid::saveshapes(ofstream& OutFile)
+{
+	if(activeShape)
+	activeShape->save(OutFile);
+	for (int i = 0; i < shapeCount; i++)
+	{
+		if (shapeList[i] != nullptr)
+		{
+			shapeList[i]->save(OutFile);
+		}
 	}
 }
