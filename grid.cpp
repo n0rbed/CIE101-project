@@ -199,6 +199,16 @@ void grid::del_list()
 	}
 }
 
+shape** grid::get_list()
+{
+	return shapeList;
+}
+
+int grid::get_count() const
+{
+	return shapeCount;
+}
+
 point grid::get_uprLeft() const
 {
 	return uprLeft;

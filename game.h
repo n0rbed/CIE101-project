@@ -13,7 +13,7 @@ class game
 	/// Add more members if needed
 	int score = 0;
 	int lives = 5;
-	int level = 2;
+	int level = 3;
 	toolbar* gameToolbar;
 	
 	window* pWind;	//Pointer to the CMU graphics window

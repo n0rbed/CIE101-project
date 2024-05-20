@@ -135,6 +135,9 @@ operation* game::createRequiredOperation(int clickedItem)
 	case SPACE+ITM_CNT:
 		shapesGrid->matchingDetection();
 		break;
+	case ITM_HINT:
+		op = new operHint(this);
+		break;
 	}
 	return op;
 }
@@ -313,9 +316,9 @@ void game::run()
 	} while (clickedItem!=ITM_EXIT);
 
 	delete gameToolbar;
-	delete pWind;
 	shapesGrid->del_list();
 	shapesGrid->deleteActiveShape();
+	delete pWind;
 	delete shapesGrid;
 
 	gameToolbar = nullptr;

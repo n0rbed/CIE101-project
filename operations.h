@@ -21,18 +21,23 @@ class operrotate :public operation
 {
 public:
 	operrotate(game* r_pGame);
-	virtual void Act();
+	virtual void Act() override;
 	
 };
 
-
+class operHint : public operation
+{
+public:
+	operHint(game* r_pGame);
+	virtual void Act() override;
+};
 
 
 class operResizeUp :public operation
 {
 public:
 	operResizeUp(game* r_pGame);
-	virtual void Act();
+	virtual void Act() override;
 };
 
 
@@ -40,7 +45,7 @@ class operResizeDown :public operation
 {
 public:
 	operResizeDown(game* r_pGame);
-	virtual void Act();
+	virtual void Act() override;
 };
 
 class operMove :public operation

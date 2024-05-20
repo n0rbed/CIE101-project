@@ -2,6 +2,8 @@
 #include "game.h"
 #include "CompositeShapes.h"
 #include <iostream>
+#include <windows.h>
+
 using namespace std;
 /////////////////////////////////// class operation  //////////////////
 operation::operation(game* r_pGame)
@@ -356,4 +358,34 @@ void operSelectLevel::Act()
 	pGame->setLevel(new_level);
 }
 
+operHint::operHint(game* r_pGame) : operation(r_pGame)
+{
+}
+void operHint::Act()
+{
+	if (pGame->getLevel() < 3) return;
 
+	grid* gridP = pGame->getGrid();
+	shape** list = gridP->get_list();
+	int cur_count = gridP->get_count();
+	bool hint_done = false;
+	for (int i = 0; i < cur_count; i++)
+	{
+		if (list[i])
+		{
+			config.fillColor = RED;
+			config.penColor = RED;
+			list[i]->update_color();
+			list[i]->draw();
+
+			Sleep(2000);
+
+			config.fillColor = BLACK;
+			config.penColor = BLACK;
+			list[i]->update_color();
+			list[i]->draw();
+
+			break;
+		}
+	}
+}
