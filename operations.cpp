@@ -6,6 +6,8 @@
 #include<vector>
 #include <windows.h>
 
+//hi there
+
 using namespace std;
 /////////////////////////////////// class operation  //////////////////
 operation::operation(game* r_pGame)
